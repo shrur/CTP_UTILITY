@@ -1,0 +1,287 @@
+###########################################################################
+#
+# Copyright (c) 2014, 2015, Oracle and/or its affiliates. All rights reserved.
+#
+#      This material is the confidential property of Oracle Corporation
+#      or its  licensors and may be used, reproduced, stored
+#      or transmitted  only in accordance with a valid Oracle license or
+#      sublicense agreement.
+#
+###########################################################################
+#
+#   File:  note.en_US
+#
+#   Description:
+#
+#       This file contains localized string object definitions.
+#
+#       Locale:  en_US ( US English )
+#
+#       Domain:  note_type (version = 1)
+#		 note_status (version = 2)
+#
+#   Rules:
+#
+#       [1] Uniqueness:
+#
+#           The combination of locale, domain, string ID, and string
+#           version must uniquely define a string object within the
+#           universe of all string objects.
+#           
+#           NOTE:
+#           =====
+#           This uniqueness must be ensured while creating or updating
+#           this new Note file. If there are duplicate entries,
+#           the programs behaviour depends on the option used. If the
+#           -f option is used then the last duplicate string definition
+#           will overwrite any previous ones. If the -f option is not
+#           used then, duplicate string definitions will be rejected.
+#
+#       [2] Locale
+#
+#           Only one locale may be specified in this file.  The locale
+#           definition must be the first non-comment statement.
+#
+#       [3] Domain
+#
+#           There may be multiple domains specified in this file.  The
+#           domain will apply to all string definitions that follow
+#           until the next domain definition statement appears.
+#
+#       [4] String Format:
+#
+#           Within this file all strings must be delimited by an opening
+#           and closing double-quote character.  The quotes will not be
+#           part of the string stored in the database.  A double-quote
+#           character can be an element of the string if it is escaped
+#           with a backslash, for example "Delete \"unneeded\" files."
+#           will be stored as "Delete "unneeded" files.".
+#
+#           Substitution parameters can be specified with %i, where i is
+#           an integer from 0 to 99.  The percent character can be an
+#           element of the string if it is escaped with a backslash, for
+#           example "It is 100\% good.".  Here is an example of an error
+#           string that specifies one substitution parameter:
+#
+#                               File %0 not found.
+#
+#           If the substitution string is "pin.conf" the formatted
+#           string will be "File pin.conf not found.".
+#
+#         The STRING and optional HELPSTR are localizable.  This file must
+#           be in UTF-8 encoding. The LOCALE and DOMAIN strings are assumed
+#         to be ASCII (no extended-ASCII characters nor multiple byte
+#         characters are allowed).
+#
+#       [5] String ID:
+#
+#           A string ID must be unique within a domain.
+#           
+#       [6] String Version:
+#
+#           Each string has an individual version, typically starting
+#           from 1, that the string owner assigns.
+#
+##########################################################################
+
+LOCALE = "en_US" ;
+
+DOMAIN = "note_type" ;
+STR
+	ID = 100 ;
+	VERSION = 1 ;
+	STRING = "Inquiry" ;
+END
+STR
+	ID = 101 ;
+	VERSION = 1 ;
+	STRING = "Balance Enquiry" ;
+END
+STR
+	ID = 102 ;
+	VERSION = 1 ;
+	STRING = "Payment Enquiry" ;
+END
+
+STR
+	ID = 103 ;
+	VERSION = 1 ;
+	STRING = "Service Enquiry" ;
+END
+STR
+	ID = 104 ;
+	VERSION = 1 ;
+	STRING = "Other Enquiry" ;
+END
+STR
+	ID = 200 ;
+	VERSION = 1 ;
+	STRING = "A/R activity" ;
+END
+STR
+	ID = 201 ;
+	VERSION = 1 ;
+	STRING = "Account adjustment" ;
+END
+STR
+	ID = 202 ;
+	VERSION = 1 ;
+	STRING = "Bill adjustment" ;
+END
+STR
+	ID = 203 ;
+	VERSION = 1 ;
+	STRING = "Item adjustment" ;
+END
+STR
+	ID = 204 ;
+	VERSION = 1 ;
+	STRING = "Event adjustment" ;
+END
+STR
+	ID = 205 ;
+	VERSION = 1 ;
+	STRING = "Account write-off" ;
+END
+STR
+	ID = 206 ;
+	VERSION = 1 ;
+	STRING = "Bill write-off" ;
+END
+STR
+	ID = 207 ;
+	VERSION = 1 ;
+	STRING = "Bill now" ;
+END
+STR
+	ID = 208 ;
+	VERSION = 1 ;
+	STRING = "Dispute open" ;
+END
+STR
+	ID = 209 ;
+	VERSION = 1 ;
+	STRING = "Dispute settled" ;
+END
+STR
+	ID = 210 ;
+	VERSION = 1 ;
+	STRING = "Credit card charged" ;
+END
+STR
+	ID = 211 ;
+	VERSION = 1 ;
+	STRING = "Non-Currency Adjustment" ;
+END
+STR
+	ID = 212 ;
+	VERSION = 1 ;
+	STRING = "Bill refund" ;
+END
+STR
+	ID = 300 ;
+	VERSION = 1 ;
+	STRING = "Technical Problems" ;
+END
+STR
+	ID = 301 ;
+	VERSION = 1 ;
+	STRING = "Service down" ;
+END
+STR
+	ID = 302 ;
+	VERSION = 1 ;
+	STRING = "Installation incomplete" ;
+END
+STR
+	ID = 303 ;
+	VERSION = 1 ;
+	STRING = "Unknown error" ;
+END
+STR
+	ID = 400 ;
+	VERSION = 1 ;
+	STRING = "CSR to CSR alert" ;
+END
+STR
+	ID = 401 ;
+	VERSION = 1 ;
+	STRING = "Customer duress" ;
+END
+STR
+	ID = 402 ;
+	VERSION = 1 ;
+	STRING = "Customer hard of hearing" ;
+END
+STR
+	ID = 403 ;
+	VERSION = 1 ;
+	STRING = "Difficult customer" ;
+END
+STR
+	ID = 500 ;
+	VERSION = 1 ;
+	STRING = "Notifications" ;
+END
+STR
+	ID = 501 ;
+	VERSION = 1 ;
+	STRING = "Email" ;
+END
+STR
+	ID = 502 ;
+	VERSION = 1 ;
+	STRING = "API" ;
+END
+STR
+	ID = 600 ;
+	VERSION = 1 ;
+	STRING = "Financial Setup" ;
+END
+STR
+	ID = 601 ;
+	VERSION = 1 ;
+	STRING = "Tax Setup" ;
+END
+STR
+	ID = 700 ;
+	VERSION = 1 ;
+	STRING = "Subscription" ;
+END
+STR
+	ID = 701 ;
+	VERSION = 1 ;
+	STRING = "Account Creation" ;
+END
+STR
+	ID = 800 ;
+	VERSION = 1 ;
+	STRING = "Payment Suspense" ;
+END
+STR
+	ID = 801 ;
+	VERSION = 1 ;
+	STRING = "Payment Reversal" ;
+END
+STR
+	ID = 802 ;
+	VERSION = 1 ;
+	STRING = "Suspense Details" ;
+END
+
+DOMAIN = "note_status" ;
+STR
+	ID = 100 ;
+	VERSION = 2 ;
+	STRING = "Not Set" ;
+END
+STR
+	ID = 101 ;
+	VERSION = 2 ;
+	STRING = "Resolved" ;
+END
+STR
+	ID = 102 ;
+	VERSION = 2 ;
+	STRING = "Unresolved" ;
+END

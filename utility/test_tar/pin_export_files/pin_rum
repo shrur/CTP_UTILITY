@@ -1,0 +1,323 @@
+#
+# @(#)pin_rum 1.0 08/07/10
+#
+#############################################################################
+#
+# Copyright (c) 1999, 2015, Oracle and/or its affiliates. All rights reserved.
+#
+#  This material is the confidential property of Oracle Corporation
+#  or its subsidiaries or licensors and may be used, reproduced, stored
+#  or transmitted only in accordance with a valid Oracle license or
+#  sublicense agreement.
+#	     
+#############################################################################
+#
+#
+#======================================================================
+# Use this file to define a list ratable usage metrics (RUM).  Each RUM
+# consists of an event type to be rated, a name, how the event should 
+# be quantified, and the units used to quantify it. You can specify 
+# more than one RUM for a given event type.
+#======================================================================
+#
+#======================================================================
+# After editing the file, run the load_pin_rum program to load the 
+# RUMs into the Portal database.
+#======================================================================
+#
+# Syntax:
+# <event_type> : <rum_name> : <quantity> : <unit> 
+# 
+# Parameters:
+#    <event_type>
+#      The event type for which this RUM is defined. For example, you
+#      might create a RUM for the event type /event/session/ip. 
+#
+#    <rum_name>
+#      A descriptive name displayed by Pricing Tool during product 
+#      creation used to identify the RUM. For example, to rate an event
+#      of type /event/session/ip based on length of connection, 
+#      you might use the descriptive name, "Duration".  To rate the
+#      same event based on how many pages are transmitted, you
+#      might use the descriptive name, "Pages".
+#
+#    <quantity>
+#      How the event should be quantified. A quantity can be a field 
+#      name or an expression containing field names and numbers. 
+#      For example, to rate an event of type /event/session/ip
+#      based on length of connection, you could define the quantity as
+#      PIN_FLD_END_T-PIN_FLD_START_T.  To rate the same event based on
+#      half the length of connection, you could define the quantity 
+#      using the expression, (PIN_FLD_END_T-PIN_FLD_START)/2.
+#      Fields must of one of the following types:  PIN_FLDT_INT,
+#      PIN_FLDT_TSTAMP, or PIN_FLDT_DECIMAL.
+#      You can specify a field name that is an element of a substruct
+#      using "A.B" notation, where "A" is the name of the substruct
+#      and "B" is the name of the substruct element. For example,
+#      PIN_FLD_FOLD.PIN_FLD_END_T indicates the element 
+#      PIN_FLD_END_T in the substruct PIN_FLD_FOLD. Substructs must 
+#      be of the type PIN_FLDT_SUBSTRUCT.  Substruct element fields 
+#      must be one of the following types:  PIN_FLDT_INT,  
+#      PIN_FLDT_TSTAMP, or PIN_FLDT_DECIMAL.
+#    
+#    <unit>
+#      The units in which the quantity is expressed.  For 
+#      example,  if a /event/session/ip/fax event being is rated
+#      by duration, you might specify seconds or minutes as
+#      the unit.  To rate the same event type by number of bytes 
+#      downloaded, you might specify kilobytes or megabytes as
+#      the unit.
+# 
+# Note: 
+#       Events with a rum_name of "None" are not rated. For events 
+#       that do not have any balance impacts, specify the run_name as
+#       "None".  This reduces the number of events handled by the
+#       rating engine which improves system performance.
+#	
+#	Portal provides the capability to load up to 1024 items of RUMs. 
+#	Please remove those unused RUM definitions if it excceds this 
+#	limitation.	
+#
+#======================================================================
+#
+#======================================================================
+# /event 		: Occurrence	: 1				: none
+# /event/session: Duration	: PIN_FLD_END_T-PIN_FLD_START_T	: second
+# 				: Size		: 100				: kilobyte
+/event 		: Occurrence 	: 1				: none
+/event/session 	: Duration 	: PIN_FLD_END_T-PIN_FLD_START_T : second
+/event/session/dialup 	: Size 	: PIN_FLD_DIALUP.PIN_FLD_BYTES_IN+PIN_FLD_DIALUP.PIN_FLD_BYTES_OUT : byte
+/event/billing/cycle/fold : Fold : PIN_FLD_FOLD.PIN_FLD_QUANTITY: none
+
+# The following events have the None rum_name
+/event/audit/collections/action                 : None  : 1     : none 
+/event/audit/customer/account 			: None 	: 1 	: none 
+/event/audit/customer/actginfo 			: None 	: 1 	: none 
+/event/audit/customer/acctinfo 			: None 	: 1 	: none 
+/event/audit/customer/billinfo 			: None 	: 1 	: none
+/event/audit/customer/login 			: None 	: 1 	: none
+/event/audit/customer/nameinfo 			: None 	: 1 	: none
+/event/audit/customer/password 			: None 	: 1 	: none
+/event/audit/customer/payinfo 			: None 	: 1 	: none
+/event/audit/customer/payinfo/cc 		: None 	: 1 	: none
+/event/audit/customer/payinfo/dd 		: None 	: 1 	: none
+/event/audit/customer/payinfo/invoice 		: None 	: 1 	: none
+/event/audit/customer/payinfo/subord 		: None 	: 1 	: none
+/event/audit/customer/topup	 		: None 	: 1 	: none
+/event/audit/customer/status 			: None 	: 1 	: none
+/event/audit/customer/taxinfo 			: None 	: 1 	: none
+/event/audit/price/deal 			: None 	: 1 	: none
+/event/audit/price/plan 			: None 	: 1 	: none
+/event/audit/price/product 			: None 	: 1 	: none
+/event/audit/price/rate 			: None 	: 1 	: none
+/event/audit/price/rate_plan 			: None 	: 1 	: none
+/event/audit/price/rate_plan_selector 		: None 	: 1 	: none
+/event/billing/adjustment/bill 			: None 	: 1 	: none
+/event/billing/batch/payment 			: None 	: 1 	: none
+/event/billing/batch/refund 			: None 	: 1 	: none
+/event/billing/batch/reversal 			: None 	: 1 	: none
+/event/billing/charge/cc 			: None 	: 1 	: none
+/event/billing/charge/dd 			: None 	: 1 	: none
+/event/billing/charge/ddebit 			: None 	: 1 	: none
+/event/billing/charge/invoice 			: None 	: 1 	: none
+/event/billing/dispute/bill 			: None 	: 1 	: none
+/event/billing/dispute/item 			: None 	: 1 	: none
+/event/billing/limit	 			: None 	: 1 	: none
+/event/billing/payment/cash 			: None 	: 1 	: none
+/event/billing/payment/cc 			: None 	: 1 	: none
+/event/billing/payment/check 			: None 	: 1 	: none
+/event/billing/payment/dd 			: None 	: 1 	: none
+/event/billing/payment/ddebit 			: None 	: 1 	: none
+/event/billing/payment/payorder 		: None 	: 1 	: none
+/event/billing/payment/postalorder 		: None 	: 1 	: none
+/event/billing/payment/wtransfer	 	: None 	: 1 	: none
+/event/billing/deal/purchase                    : None  : 1     : none
+/event/billing/deal/cancel                      : None  : 1     : none
+/event/billing/discount/action                  : None  : 1     : none
+/event/billing/discount/action/cancel           : None  : 1     : none
+/event/billing/discount/action/modify           : None  : 1     : none
+/event/billing/discount/action/modify/status    : None  : 1     : none
+/event/billing/discount/action/purchase         : None  : 1     : none
+/event/billing/product/action 			: None 	: 1 	: none
+/event/billing/product/action/cancel 		: None 	: 1 	: none
+/event/billing/product/action/modify 		: None 	: 1 	: none
+/event/billing/product/action/modify/status 	: None 	: 1 	: none
+/event/billing/product/action/purchase 		: None 	: 1 	: none
+/event/billing/refund/cash 			: None 	: 1 	: none
+/event/billing/refund/cc 			: None 	: 1 	: none
+/event/billing/refund/check 			: None 	: 1 	: none
+/event/billing/refund/dd 			: None 	: 1 	: none
+/event/billing/refund/payorder 			: None 	: 1 	: none
+/event/billing/refund/postalorder 		: None 	: 1 	: none
+/event/billing/refund/wtransfer 		: None 	: 1 	: none
+/event/billing/reversal/cc 			: None 	: 1 	: none
+/event/billing/reversal/check 			: None 	: 1 	: none
+/event/billing/reversal/dd 			: None 	: 1 	: none
+/event/billing/reversal/ddebit 			: None 	: 1 	: none
+/event/billing/reversal/payorder 		: None 	: 1 	: none
+/event/billing/reversal/postalorder 		: None 	: 1 	: none
+/event/billing/reversal/wtransfer	 	: None 	: 1 	: none
+/event/billing/settlement/bill 			: None 	: 1 	: none
+/event/billing/settlement/item 			: None 	: 1 	: none
+/event/billing/validate/cc 			: None 	: 1 	: none
+/event/billing/validate/dd 			: None 	: 1 	: none
+/event/billing/writeoff/account			: None 	: 1 	: none
+/event/billing/writeoff/bill 			: None 	: 1 	: none
+/event/billing/writeoff/item 			: None 	: 1 	: none
+/event/billing/writeoff/tax_account 		: None 	: 1 	: none
+/event/billing/writeoff/tax_bill 		: None 	: 1 	: none
+/event/billing/writeoff/tax_item 		: None 	: 1 	: none
+/event/customer/actginfo 			: None 	: 1 	: none
+/event/customer/billinfo 			: None 	: 1 	: none
+/event/customer/locale 				: None 	: 1 	: none
+/event/customer/login 				: None 	: 1 	: none
+/event/customer/nameinfo 			: None 	: 1 	: none
+/event/customer/password 			: None 	: 1 	: none
+/event/customer/product_status 			: None 	: 1 	: none
+/event/customer/status 				: None 	: 1 	: none
+/event/device					: None 	: 1 	: none
+/event/device/create				: None 	: 1 	: none
+/event/device/delete				: None 	: 1 	: none
+/event/device/associate				: None 	: 1 	: none
+/event/device/disassociate			: None 	: 1 	: none
+/event/device/set_attr				: None 	: 1 	: none
+/event/device/state				: None 	: 1 	: none
+/event/group/member 				: None 	: 1 	: none
+/event/group/parent 				: None 	: 1 	: none
+/event/price/deal 				: None 	: 1 	: none
+/event/price/fold 				: None 	: 1 	: none
+/event/price/product 				: None 	: 1 	: none
+/event/price/rate 				: None 	: 1 	: none
+/event/schedule/create 				: None 	: 1 	: none
+/event/schedule/delete 				: None 	: 1 	: none
+/event/schedule/execute 			: None 	: 1 	: none
+/event/schedule/modify 				: None 	: 1 	: none
+/event/notification				: None	: 1	: none
+/event/notification/account/create              : None  : 1     : none
+/event/notification/bal_grp/create              : None  : 1     : none
+/event/notification/bal_grp/modify              : None  : 1     : none
+/event/notification/service/pre_create          : None  : 1     : none
+/event/notification/service/delete          	: None  : 1     : none
+/event/group/sharing/discounts/create           : None  : 1     : none
+/event/group/sharing/discounts/modify           : None  : 1     : none
+/event/group/sharing/discounts/delete           : None  : 1     : none
+/event/group/sharing/charges/create             : None  : 1     : none
+/event/group/sharing/charges/modify             : None  : 1     : none
+/event/group/sharing/charges/delete             : None  : 1     : none
+/event/billing/ordered_balgrp/create            : None  : 1     : none
+/event/billing/ordered_balgrp/modify            : None  : 1     : none
+/event/billing/ordered_balgrp/delete            : None  : 1     : none
+/event/billing/balgrp_map/create                : None  : 1     : none
+/event/billing/balgrp_map/modify                : None  : 1     : none
+/event/billing/balgrp_map/delete                : None  : 1     : none
+/event/billing/suppression                      : None  : 1     : none 
+/event/billing/bundle                           : None  : 1     : none
+/event/billing/bundle/create                    : None  : 1     : none
+/event/billing/bundle/modify                    : None  : 1     : none
+#========================================================================
+# for rating netflow events
+#========================================================================
+/event/netflow/categorization: Netflow_categorization: 1			: none
+# netflow usage event for rating at billing time.
+# the quantity is BYTES by default and is divided by 1024 to get KBYTES
+/event/netflow/usage	: Netflow_usage	: (PIN_FLD_NETFLOW_USAGE.PIN_FLD_QUANTITY)/1024: none
+# netflow usage event for bandwidth
+# the quantity is mbps(mega bits per second)
+/event/netflow/usage	: Netflow_bandwidth	: PIN_FLD_NETFLOW_USAGE.PIN_FLD_QUANTITY: none
+# netflow usage event for import time rating
+/event/netflow/usage	: Netflow_import_usage  : (PIN_FLD_NETFLOW_USAGE.PIN_FLD_BYTES)/1024: none
+
+#added for remittance
+/event/billing/remittance : Number 	: 1 : none
+/event/billing/remittance : Usage Time 	: 1 : second
+/event/billing/remittance : Usage Size 	: 1 : byte
+/event/billing/remittance : Amount 	: 1 : none
+
+#========================================================================
+# for rating Narus events
+#========================================================================
+# NARUS Dialup Event - Duration in hours
+/event/session/dialup/narus  : NARUS_Dialup_Usage : (PIN_FLD_NRS_DIALUP_IPDR.PIN_FLD_DURATION_SECONDS)/3600.0 : none
+# NARUS VoIP Event - Duration in minutes
+/event/session/ipt/call/narus : Narus_VoIP_Usage  : (PIN_FLD_NRS_VOIP_IPDR.PIN_FLD_DURATION_SECONDS)/60.0 : none
+# NARUS Flow Event - Total bytes sent & received in megabytes
+/event/broadband/usage  : NARUS_Flow_Usage  : (PIN_FLD_BROADBAND_USAGE.PIN_FLD_BYTES_IN+PIN_FLD_BROADBAND_USAGE.PIN_FLD_BYTES_OUT)/1048576.0        : none
+# NARUS Stream Event - Megabytes transferred
+/event/broadband/usage  : NARUS_Stream_Usage    : (PIN_FLD_BROADBAND_USAGE.PIN_FLD_BYTES_IN+PIN_FLD_BROADBAND_USAGE.PIN_FLD_BYTES_OUT)/1048576.0        : none
+
+#========================================================================
+# for rating GPRS sessions
+#========================================================================
+/event/session/gprs	        : Size 	   : (PIN_FLD_GPRS_INFO.PIN_FLD_BYTES_IN+PIN_FLD_GPRS_INFO.PIN_FLD_BYTES_OUT)/1024 : kilobyte
+/event/session/gprs	        : Uplink   : PIN_FLD_GPRS_INFO.PIN_FLD_BYTES_IN/1024 : kilobyte
+/event/session/gprs	        : DownLink : PIN_FLD_GPRS_INFO.PIN_FLD_BYTES_OUT/1024 : kilobyte
+
+#========================================================================
+# for rating WAP activity
+#========================================================================
+/event/activity/wap/interactive : Size   : PIN_FLD_WAP_INFO.PIN_FLD_BYTES_IN/1024 : kilobyte
+
+#========================================================================
+# for rating SMS messages
+#========================================================================
+/event/activity/sms : Messages : 1 : none
+
+#========================================================================
+# for rating CONTENT activity
+#========================================================================
+/event/activity/content : Content_Usage  : PIN_FLD_CONTENT_INFO.PIN_FLD_QUANTITY : none 
+
+#========================================================================
+# for rating GSM 
+#========================================================================
+/event/session/gsm		: Messages : PIN_FLD_GSM_INFO.PIN_FLD_NUMBER_OF_UNITS : none
+/event/session/gsm	        : Size 	   : (PIN_FLD_GSM_INFO.PIN_FLD_BYTES_IN+PIN_FLD_GSM_INFO.PIN_FLD_BYTES_OUT)/1024 : kilobyte
+/event/session/gsm	        : Uplink   : PIN_FLD_GSM_INFO.PIN_FLD_BYTES_IN/1024 : kilobyte
+/event/session/gsm	        : DownLink : PIN_FLD_GSM_INFO.PIN_FLD_BYTES_OUT/1024 : kilobyte
+
+#========================================================================
+# for rating Telco GSM 
+#========================================================================
+/event/session/telco/gsm	: Messages : PIN_FLD_GSM_INFO.PIN_FLD_NUMBER_OF_UNITS : none
+/event/session/telco/gsm        : Size 	   : (PIN_FLD_GSM_INFO.PIN_FLD_BYTES_IN+PIN_FLD_GSM_INFO.PIN_FLD_BYTES_OUT) : byte
+/event/session/telco/gsm        : Uplink   : PIN_FLD_GSM_INFO.PIN_FLD_BYTES_IN : byte
+/event/session/telco/gsm        : DownLink : PIN_FLD_GSM_INFO.PIN_FLD_BYTES_OUT : byte
+
+#========================================================================
+# for rating Payment fee events
+#========================================================================
+/event/billing/fee/failed_payment               : Amount : PIN_FLD_FAILED_PAYMENT_FEE.PIN_FLD_AMOUNT_ORIGINAL_PAYMENT : none
+
+#========================================================================
+# for rating Payment incentive events
+#========================================================================
+/event/billing/incentive : Current Bill Total : PIN_FLD_INCENTIVE.PIN_FLD_CURRENT_TOTAL  : none
+/event/billing/incentive : Last Bill Total    : PIN_FLD_INCENTIVE.PIN_FLD_PREVIOUS_TOTAL : none
+
+#========================================================================
+# for rating Telco events
+#========================================================================
+/event/session/telco    : Volume     : (PIN_FLD_TELCO_INFO.PIN_FLD_BYTES_UPLINK+PIN_FLD_TELCO_INFO.PIN_FLD_BYTES_DOWNLINK) : byte
+/event/session/telco    : VolumeUpLoad   : PIN_FLD_TELCO_INFO.PIN_FLD_BYTES_UPLINK : byte
+/event/session/telco    : VolumeDownLoad : PIN_FLD_TELCO_INFO.PIN_FLD_BYTES_DOWNLINK : byte
+
+#========================================================================
+# For dropped call the value of the Dropped Call is set to 0 so that 
+# get_candidate_rums validation passes without any issue and 
+# op_act_pol_spec_candidate_rums is modified to populate the values of 
+# Dropped call quantity.
+#========================================================================
+/event/session/telco    : Dropped_Call_Quantity         : 0 : second
+#=======
+/event/billing/product/fee/purchase     : Occurrence    : 1     : none
+/event/billing/product/fee/cancel       : Occurrence    : 1     : none
+/event/billing/product/fee/cycle/cycle_forward_monthly  : Occurrence    : 1     : none
+/event/billing/product/fee/cycle/cycle_forward_annual   : Occurrence    : 1     : none
+/event/billing/incentive        : Occurrence    : 1     : none
+/event/billing/cycle/discount   : Occurrence    : 1     : none
+/event/session/telco/gsm/st_voice       : Voice Duration Seconds : PIN_FLD_END_T-PIN_FLD_START_T : second
+/event/session/telco/gsm/st_sms : Occurrence    : 1     : none
+/event/session/telco/gsm/st_data        : Data Volume Bytes : (PIN_FLD_TELCO_INFO.PIN_FLD_BYTES_UPLINK + PIN_FLD_TELCO_INFO.PIN_FLD_BYTES_DOWNLINK) : byte
+/event/session/telco/gsm/st_mms : Occurrence    : 1     : none
+/event/session/telco/gsm/st_content     : Content Price Dollars : (PIN_FLD_GSM_INFO.PIN_FLD_NUMBER_OF_UNITS)/100 : none
+/event/session/telco/gsm/st_vmtt        : Occurrence    : 1     : none

@@ -1,0 +1,134 @@
+#
+# @(#)pin_usage_map 1.0 99/10/08 
+#
+#
+#======================================================================
+# pin_usage_map
+#
+#  Copyright (c) 1999 - 2006 Oracle. All rights reserved.
+#
+#  This material is the confidential property of Oracle Corporation
+#  or its subsidiaries or licensors and may be used, reproduced, stored
+#  or transmitted only in accordance with a valid Oracle license or
+#  sublicense agreement.
+#
+#======================================================================
+#
+#======================================================================
+# Use this file to define default event usage maps. You enter 
+# nondefault usage map data by using the Pricing Tool.  Edit this file
+# to change the default event usage map values for system events. 
+# See "About Creating A Price List" and the Pricing Tool Help for
+# more information.
+#======================================================================
+#
+#======================================================================
+# After editing the file, run the load_usage_map program to load the
+# usage maps into the Portal database.
+#======================================================================
+#
+#======================================================================
+# Syntax:
+#   <event> : <rum_name> : <TOD_mode> : <timezone> : <min_quantity> \ 
+#   : <min_unit> : <incr_quantity> : <incr_unit> : <rounding_mode> \
+#   : <rate_plan_name>
+# 
+# Parameters:
+#    <event>
+#      The event type to which this ratable usage metric (RUM) 
+#      will apply.
+#
+#    <rum_name>
+#      The name of the RUM.  This is the name you will choose in the 
+#      Pricing Tool when you create products.
+#    
+#    <TOD_mode>
+#      How time-of-day rates are applied to this event. 
+#      Valid values are:
+#
+#          Start time - Specify "START_TIME" or "0" to indicate the 
+#                       rate should use the start time of the event.
+#          End time - Specify "END_TIME" or "1" to indicate the rate 
+#                     should use the end time of the event. 
+#          Timed - Specify "TIMED" or "2" indicates the rate should 
+#                  use the duration of the event.
+#
+#    <timezone>
+#       This parameter is reserved for future use. Leave this value 
+#       set to "0". 
+#
+#    <min_quantity>
+#       The minimum value the RUM quantity is rounded to. This value
+#       is used with the min_unit parameter.  For example, if you 
+#       charge $1/hour and you want to charge for at least an hour
+#       regardless of how long a session lasts, specify a 
+#       min_quantity value of "1" and a min_unit value of "HOUR".
+#
+#    <min_unit>  
+#       The unit in which the min_quantity value is specified. Valid
+#       values are:
+#         None - Specify "NONE" or "0" to indicate there is no unit 
+#                associated with the min_quantity value.
+#         Seconds - Specify "SECOND" or "1" to indicate the 
+#                   min_quantity is expressed in terms of seconds. 
+#         Minutes - Specify "MINUTE" or "2" to indicate the 
+#                   min_quantity is expressed in terms of minutes.
+#         Hours - Specify "HOUR" or "3" to indicate the 
+#                 min_quantity is expressed in terms of hours.
+#         Days - Specify "DAY" or "4" to indicate the min_quantity 
+#                is expressed in terms of days.
+#
+#    <incr_quantity>
+#       The quantity by which the RUM quantity is changed during 
+#       rating. This value is used with the incr_unit.
+#       For example, if you charge $1/hour and you want to charge 
+#       for 6-minute increments, specify an incr_quantity value
+#       of "6" and incr_unit value of "MINUTE".
+#
+#    <incr_unit>
+#       The unit in which the incr_quantity value is specified. Valid
+#       values are:    
+#         None - Specify "NONE" or "0" to indicate there is no unit 
+#                associated with the incr_quantity value.
+#         Seconds - Specify "SECOND" or "1" to indicate the 
+#                   incr_quantity is expressed in terms of seconds. 
+#         Minutes - Specify "MINUTE" or "2" to indicate the 
+#                   incr_quantity is expressed in terms of minutes.
+#         Hours - Specify "HOUR" or "3" to indicate the 
+#                 incr_quantity is expressed in terms of hours.
+#         Days - Specify "DAY" or "4" to indicate the incr_quantity
+#                is expressed in terms of days.
+#
+#    <rounding_mode>
+#       Indicates how the RUM quantity is rounded. Valid values are:
+#         Nearest - Specify "NEAREST" or "0" to indicate rounding should 
+#                   be to the nearest valid value. 
+#         Up - Specify "UP" or "1" to indicate rounding should be to 
+#              the nearest valid value greater than the RUM quantity.
+#         Down - Specify "DOWN" or "2" to indicate rounding should be 
+#                to the nearest valid value less than the RUM quantity
+#
+#    <rate_plan_name>
+#      Indicates which rate plan name to use. 
+#
+#======================================================================
+#				
+#======================================================================
+
+/event/billing/cycle/rollover/monthly	: Occurrence: 0: 0: 0: 0: 0: 0: 0: rollover_monthly
+/event/billing/cycle/discount : Occurrence: 0: 0: 0: 0: 0: 0: 0: cycle_discount
+/event/billing/cycle/discount/mostcalled : Occurrence: 0: 0: 0: 0: 0: 0: 0: mostcalled_cycle_discount
+/event/billing/product/fee/cycle/cycle_forward_monthly	: Occurrence: 0: 0: 0: 0: 0: 0: 0: cycle_forward_monthly
+/event/billing/product/fee/cycle/cycle_forward_arrear	: Occurrence: 0: 0: 0: 0: 0: 0: 0: cycle_forward_arrear
+/event/billing/product/fee/cycle/cycle_forward_bimonthly: Occurrence: 0: 0: 0: 0: 0: 0: 0: cycle_forward_bimonthly
+/event/billing/product/fee/cycle/cycle_forward_quarterly: Occurrence: 0: 0: 0: 0: 0: 0: 0: cycle_forward_quarterly
+/event/billing/product/fee/cycle/cycle_forward_semiannual: Occurrence: 0: 0: 0: 0: 0: 0: 0: cycle_forward_semiannual
+/event/billing/product/fee/cycle/cycle_forward_annual	: Occurrence: 0: 0: 0: 0: 0: 0: 0: cycle_forward_annual
+/event/billing/product/fee/purchase	: Occurrence: 0: 0: 0: 0: 0: 0: 0: purchase
+/event/billing/product/fee/cancel	: Occurrence: 0: 0: 0: 0: 0: 0: 0: cancel
+ 
+#added for remittance
+/event/billing/remittance	: Number : 0: 0: 0: 0: 0: 0: 0: remit_number
+/event/billing/remittance	: Usage Time : 0: 0: 0: 0: 0: 0: 0: remit_usage_time
+/event/billing/remittance	: Usage Size : 0: 0: 0: 0: 0: 0: 0: remit_usage_size
+/event/billing/remittance	: Amount : 0: 0: 0: 0: 0: 0: 0: remit_amount

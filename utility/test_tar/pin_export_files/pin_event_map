@@ -1,0 +1,163 @@
+#
+# @(#)pin_event_map 2.1 04/05/03 
+#
+#############################################################################
+#
+#  Copyright (c) 1999 - 2006 Oracle. All rights reserved.
+#
+#  This material is the confidential property of Oracle Corporation
+#  or its subsidiaries or licensors and may be used, reproduced, stored
+#  or transmitted only in accordance with a valid Oracle license or
+#  sublicense agreement.
+#
+#
+#############################################################################
+#
+#
+#======================================================================
+# Use this file to specify the event types available for each 
+# service or account when creating products.  
+# 
+#======================================================================
+#
+#======================================================================
+# After editing the file, run the load_event_map program to load 
+# the contents of the file into the Portal database and create the 
+# /config/event_map object. 
+#======================================================================
+#
+#======================================================================
+# Syntax:
+# <purchase_level> : <event_type> : <event_description> : <count> : <unit> : <use start_t or end_t>
+#
+# Parameters:
+#
+#    <purchase_level>
+#      Indicates whether an account or a specific service is 
+#      associated with the event types. 
+#
+#      Valid values are:
+#          account - Specifies that all services associated with the
+#                    account purchasing the product will be associated
+#                    with the set of event types.
+#          <service_name> - Specifies that only the service with this
+#                           service_name will be associated with the
+#                           set of event types.
+#    <event_type>
+#      Indicates the event type to associate with a particular 
+#      purchase level.  You can specify more than one event type
+#      per purchase level.
+#
+#    <event_description>
+#      A short description of the event type.  This description is 
+#      displayed in the Pricing Tool.
+#
+#    <count>
+#      Optional parameter. It indicates frequency of the event. 
+#      Must be positive numbers
+#      If left blank, it defaults to 0.
+#
+#    <unit>
+#      Optional parameter. It indicates the unit of the frequency of the cycle event. 
+#      Must be these values (month, day, week, year)
+#      If left blank, it defaults to month.
+#
+#    <use start_t or end_t>
+#      Optional parameter. This parameter is for session event whose's start_t and end_t are
+#	   different typically; since in Apollo we have the validity-based sub-balances, so we need 
+#      to know which time point (start_t or end_t) to be used when determining which 
+#	   sub-balances are valid for this event.  By default, start_t will be used, you can
+#      specify end_t also. If left blank, it defaults to start_t.
+#	   This setting is per event type, so for one event type only one value can be specified, 
+#	   even though it's possible that the same event type can appear in different purchase
+#      levels.
+#
+#	Count of cycle events must be greater than 0
+#	When cache is loaded, count for pre-defined cycle-events like
+#	cycle_forward_monthly, cycle_forward_bimonthly,
+#	cycle_forward_quarterly, cycle_forward_semiannual and
+#	cycle_forward_annual are forced to 1, 2, 3, 6 and 12 respectively.
+#======================================================================
+#
+#======================================================================
+/account	: /event/billing/product/fee/cycle/cycle_forward_monthly	: Monthly Cycle Forward Event : 1 : month
+		: /event/billing/product/fee/cycle/cycle_forward_arrear	:  Cycle Forward Arrear Event : 1 : month
+		: /event/billing/product/fee/cycle/cycle_forward_bimonthly	: Bimonthly Cycle Forward Event : 2 : month
+		: /event/billing/product/fee/cycle/cycle_forward_quarterly	: Quarterly Cycle Forward Event : 3 : month
+		: /event/billing/product/fee/cycle/cycle_forward_semiannual	: Semiannual Cycle Forward Event : 6 : month
+		: /event/billing/product/fee/cycle/cycle_forward_annual		: Annual Cycle Forward Event : 1 : year
+		: /event/billing/product/fee/cycle/cycle_arrear			: Monthly Cycle Arrear Event : 1 : month
+		: /event/billing/cycle/rollover/monthly				: Monthly Cycle Rollover Event : 1 : month
+		: /event/billing/product/fee/purchase				: Product Purchase Fee Event
+		: /event/billing/product/fee/cancel				: Product Cancel Fee Event
+		: /event/billing/cycle/fold					: Cycle Fold Event : 1
+		: /event/billing/cycle/discount					: Billing Time Discount Event : 1
+		: /event/billing/cycle/discount/mostcalled			: MostCalled Billing Time Discount Event : 1
+		: /event/billing/incentive					: Payment Incentive Event : 1
+		: /event/billing/fee/failed_payment				: Failed Payment Fee Event : 1
+#======================================================================
+
+# you could specify "/service/ip	: /event/session	: Session Event : : : end_t" also
+
+/service/ip	: /event/session	: Session Event : : : start_t
+		: /event/session/dialup	: IP Dialup Event
+#======================================================================
+/service/telephony	: /event/session		: Session Event
+			: /event/session/ipt/call	: IPT Call Session Event
+			: /event/session/call/telephony	: Telephony Call Session Event 
+#======================================================================
+/service/broadband	: /event/netflow/usage	: NetFlow Usage Event
+			: /event/netflow/categorization : NetFlow Categorization Event
+			: /event/netflow/identification : NetFlow Identification Event
+#added for Remittance
+/account	: /event/billing/remittance : Remittance Event
+
+#======================================================================
+# Narus events
+#======================================================================
+/service/ip        : /event/session/dialup/narus         : NARUS Dialup Event
+/service/telephony : /event/session/ipt/call/narus       : NARUS VoIP Event
+/service/stream    : /event/broadband/usage              : NARUS Stream Event
+/service/broadband : /event/broadband/usage              : NARUS Flow Event
+
+#======================================================================
+# Wireless events
+#======================================================================
+/service/ip/gprs : /event/session/gprs/master     : GPRS master session
+		 : /event/session/gprs/subsession : GPRS subsession session
+
+/service/wap/interactive : /event/activity/wap/interactive : WAP Activity
+#======================================================================
+/service/sms            : /event/activity/sms                   : SMS activity
+
+#======================================================================
+/service/content            : /event/activity/content                   : CONTENT activity
+
+#======================================================================
+/service/gsm            : /event/session/gsm       : Real time GSM session 
+
+#======================================================================
+# Wireless DELAYED events
+#======================================================================
+/service/ip/gprs : /event/delayed/session/gprs : Delayed GPRS session
+
+/service/wap/interactive : /event/delayed/activity/wap/interactive : Delayed WAP Activity
+#======================================================================
+/service/gsm            : /event/delayed/session/gsm       : Delayed GSM session 
+#======================================================================
+/service/telco  : /event/session/telco          : Real Time Telco Session
+/service/telco  : /event/delayed/session/telco  : Delayed Telco Session
+/service/telco  : /event/activity/telco         : Real Time Telco Activity
+/service/telco  : /event/delayed/activity/telco : Delayed Telco Activity
+/service/settlement/roaming/outcollect   : /event/delayed/session/telco/roaming   :Roaming Settlement Event
+/service/settlement/roaming/incollect    : /event/delayed/session/telco/roaming   :Roaming Settlement Event
+
+
+/account         : /event/session/telco/gsm/st_sms                               : Real-time Cellular SMS Usage
+                : /event/delayed/session/telco/gsm/st_voice                     : Delayed Cellular Voice Usage
+
+
+
+/service/telco/st_cellular/voice : /event/session/telco/gsm/st_voice    : Real-time Cellular Voice Usage
+/service/telco/st_cellular/voice : /event/delayed/session/telco/gsm/st_voice    : Delayed Cellular Voice Usage
+/service/telco/st_cellular/sms : /event/session/telco/gsm/st_sms        : Real-time Cellular SMS Usage

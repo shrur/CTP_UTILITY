@@ -1,0 +1,20 @@
+#!/bin/bash
+echo "pin_export export utility started...."
+mkdir -p /opt/app/brm/7.5/sys/test/pin_export_files
+while read -r LINE; do
+ cp $LINE /opt/app/brm/7.5/sys/test/pin_export_files    
+done < files.txt
+ cd /opt/app/brm/7.5/sys/test
+ tar -czvf pin_export_files.tar.gz pin_export_files
+ echo "Started the transferring files from PROD to FTP server"
+ echo "transferring Started"
+ user=pin
+ host=10.75.253.102
+ scp pin_export_files.tar.gz $user@$host:/tmp
+ if [ $? -eq 0 ]
+ then
+  echo "Success.log">>success.log
+ else
+ echo "Error.log">>Error.log
+ fi
+##done < files.txt 

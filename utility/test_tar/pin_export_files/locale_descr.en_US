@@ -1,0 +1,338 @@
+##########################################################################
+#
+# Copyright (c) 1999, 2013, Oracle and/or its affiliates. All rights reserved. 
+# 
+#	This material is the confidential property of Oracle Corporation
+#	or its licensors and may be used, reproduced, stored or transmitted
+#	only in accordance with a valid Oracle license or sublicense agreement.
+#
+##########################################################################
+#
+#   File:  locale_descr.en_US
+#
+#   Description:
+#
+#	This file contains localized string object definitions.
+#
+#	Locale:  en_US ( US English )
+#
+#	Domain:  Locale Descriptions - en_US
+#
+#   Rules:
+#
+#	[1] Uniqueness:
+#
+#	    The combination of locale, domain, string ID, and string
+#	    version must uniquely define a string object within the
+#	    universe of all string objects.
+#
+#	[2] Locale
+#
+#	    Only one locale may be specified in this file.  The locale
+#	    definition must be the first non-comment statement.
+#
+#	[3] Domain
+#
+#	    There may be multiple domains specified in this file.  The
+#	    domain will apply to all string definitions that follow
+#	    until the next domain definition statement appears.
+#
+#	[4] String Format:
+#
+#	    Within this file all strings must be delimited by an opening
+#	    and closing double-quote character.  The quotes will not be
+#	    part of the string stored in the database.  A double-quote
+#	    character can be an element of the string if it is escaped
+#	    with a backslash, for example "Delete \"unneeded\" files."
+#	    will be stored as "Delete "unneeded" files.".
+#
+#	    Substitution parameters can be specified with %i, where i is
+#	    an integer from 0 to 99.  The percent character can be an
+#	    element of the string if it is escaped with a backslash, for
+#	    example "It is 100\% good.".  Here is an example of an error
+#	    string that specifies one substitution parameter:
+#
+#				File %0 not found.
+#
+#	    If the substitution string is "pin.conf" the formatted
+#	    string will be "File pin.conf not found.".
+#
+#           The STRING and optional HELPSTR are localizable.  This file must be
+#           in UTF-8 encoding. The LOCALE and DOMAIN strings are assumed
+#           to be ASCII (no extended-ASCII characters nor multiple byte
+#           characters are allowed).
+#
+#	[5] String ID:
+#
+#	    A string ID must be unique within a domain.
+#
+#	[6] String Version:
+#
+#	    Each string has an individual version, typically starting
+#	    from 1, that the string owner assigns.
+#
+##########################################################################
+
+LOCALE = "en_US" ;
+
+DOMAIN = "Locale Descriptions - en_US" ;
+STR
+	ID = 1 ;
+	VERSION = 1 ;
+	STRING = "Danish( Denmark )" ;
+	HELPSTR = "da" ;
+END
+STR
+	ID = 2 ;
+	VERSION = 1 ;
+	STRING = "German( Germany )" ;
+	HELPSTR = "de" ;
+END
+STR
+	ID = 3 ;
+	VERSION = 1 ;
+	STRING =  "German( Austria )" ;
+	HELPSTR = "de_AT" ;
+END
+STR
+	ID = 4 ;
+	VERSION = 1 ;
+	STRING = "German( Switzerland )" ;
+	HELPSTR = "de_CH" ;
+END
+STR
+	ID = 5 ;
+	VERSION = 1 ;
+	STRING = "English( US )" ;
+	HELPSTR = "en_US" ;
+END
+STR
+	ID = 6 ;
+	VERSION = 1 ;
+	STRING = "English( Australia )" ;
+	HELPSTR = "en_AU" ;
+END
+STR
+	ID = 7 ;
+	VERSION = 1 ;
+	STRING = "English( Canada )" ;
+	HELPSTR = "en_CA" ;
+END
+STR
+	ID = 8 ;
+	VERSION = 1 ;
+	STRING = "English( New Zealand )" ;
+	HELPSTR = "en_NZ" ;
+END
+STR
+	ID = 9 ;
+	VERSION = 1 ;
+	STRING = "English( UK )" ;
+	HELPSTR = "en_UK" ;
+END
+STR
+	ID = 10 ;
+	VERSION = 1 ;
+	STRING = "Spanish( Spain )" ;
+	HELPSTR = "es" ;
+END
+STR
+	ID = 11 ;
+	VERSION = 1 ;
+	STRING = "Spanish( Mexico )" ;
+	HELPSTR = "es_MX" ;
+END
+STR
+	ID = 12 ;
+	VERSION = 1 ;
+	STRING = "French( France )" ;
+	HELPSTR = "fr" ;
+END
+STR
+	ID = 13 ;
+	VERSION = 1 ;
+	STRING = "French( Belgium )" ;
+	HELPSTR = "fr_BE" ;
+END
+STR
+	ID = 14 ;
+	VERSION = 1 ;
+	STRING = "French( Canada )" ;
+	HELPSTR = "fr_CA" ;
+END
+STR
+	ID = 15 ;
+	VERSION = 1 ;
+	STRING = "French( Switzerland )" ;
+	HELPSTR = "fr_CH" ;
+END
+STR
+	ID = 16 ;
+	VERSION = 1 ;
+	STRING = "Italian( Italy )" ;
+	HELPSTR = "it" ;
+END
+STR
+	ID = 17 ;
+	VERSION = 1 ;
+	STRING = "Japanese( Japan )" ;
+	HELPSTR = "ja" ;
+END
+STR
+	ID = 18 ;
+	VERSION = 1 ;
+	STRING = "Korean( Korea )" ;
+	HELPSTR = "ko" ;
+END
+
+STR
+	ID = 19 ;
+	VERSION = 1 ;
+	STRING = "Dutch( Netherlands )" ;
+	HELPSTR = "nl";
+END
+STR
+	ID = 20 ;
+	VERSION = 1 ;
+	STRING = "Dutch( Belgium )" ;
+	HELPSTR = "nl_BE" ;
+END
+STR
+	ID = 21 ;
+	VERSION = 1 ;
+	STRING = "Portuguese( Portugal )" ;
+	HELPSTR = "pt" ;
+END
+STR
+	ID = 22 ;
+	VERSION = 1 ;
+	STRING = "Swedish( Sweden )" ;
+	HELPSTR = "sve" ;
+END
+
+STR
+	ID = 23 ;
+	VERSION = 1 ;
+	STRING = "Chinese( PRC )" ;
+	HELPSTR = "zh" ;
+END
+STR
+	ID = 24 ;
+	VERSION = 1 ;
+	STRING = "Chinese( Taiwan )" ;
+	HELPSTR = "zh_TW" ;
+END
+STR
+	ID = 25 ;
+	VERSION = 1 ;
+	STRING = "Portuguese( Brazil )" ;
+	HELPSTR = "pt_BR" ;
+END
+STR
+	ID = 26 ;
+	VERSION = 1 ;
+	STRING = "Norwegian( Bokmal )" ;
+	HELPSTR = "no" ;
+END
+STR
+	ID = 27 ;
+	VERSION = 1 ;
+	STRING = "Norwegian( Nynorsk )" ;
+	HELPSTR = "no_NY" ;
+END
+STR
+	ID = 28 ;
+	VERSION = 1 ;
+	STRING = "Czech" ;
+	HELPSTR = "cz" ;
+END
+STR
+	ID = 29 ;
+	VERSION = 1 ;
+	STRING = "Hungarian" ;
+	HELPSTR = "hu" ;
+END
+STR
+	ID = 30 ;
+	VERSION = 1 ;
+	STRING = "Russian" ;
+	HELPSTR = "ru" ;
+END
+STR
+	ID = 31 ;
+	VERSION = 1 ;
+	STRING = "Polish" ;
+	HELPSTR = "pl" ;
+END
+STR
+	ID = 32 ;
+	VERSION = 1 ;
+	STRING = "Finnish" ;
+	HELPSTR = "fi" ;
+END
+STR
+	ID = 33 ;
+	VERSION = 1 ;
+	STRING = "Greek" ;
+	HELPSTR = "el" ;
+END
+STR
+	ID = 34 ;
+	VERSION = 1 ;
+	STRING = "Hebrew( Israel )" ;
+	HELPSTR = "iw_IL" ;
+END
+STR
+	ID = 35 ;
+	VERSION = 1 ;
+	STRING = "Bulgarian( Bulgaria )" ;
+	HELPSTR = "bg_BG" ;
+END
+STR
+	ID = 36 ;
+	VERSION = 1 ;
+	STRING = "English( Ireland )" ;
+	HELPSTR = "en_IE" ;
+END
+STR
+	ID = 37 ;
+	VERSION = 1 ;
+	STRING = "Italian( Switzerland )" ;
+	HELPSTR = "it_CH" ;
+END
+STR
+	ID = 38 ;
+	VERSION = 1 ;
+	STRING = "Croatian( Croatia )" ;
+	HELPSTR = "hr_HR" ;
+END
+STR
+	ID = 39 ;
+	VERSION = 1 ;
+	STRING = "Slovenian( Slovenia )" ;
+	HELPSTR = "sl_SI" ;
+END
+STR
+	ID = 40 ;
+	VERSION = 1 ;
+	STRING = "Spanish( Argentina )" ;
+	HELPSTR = "es_AR" ;
+END
+STR
+	ID = 41 ;
+	VERSION = 1 ;
+	STRING = "Spanish( Costa Rica )" ;
+	HELPSTR = "es_CR" ;
+END
+STR
+	ID = 42 ;
+	VERSION = 1 ;
+	STRING = "Chinese( Singapore )" ;
+	HELPSTR = "zh_SG" ;
+END
+STR
+	ID = 43 ;
+	VERSION = 1 ;
+	STRING = "English( Singapore )" ;
+	HELPSTR = "en_SG" ;
+END

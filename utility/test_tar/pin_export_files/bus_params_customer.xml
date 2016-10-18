@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  $Header: bus_platform_vob/financial/config/xml_utils/bus_params_customer.xml /cgbubrm_7.5.0.portalbase/1 2015/11/27 05:16:14 nishahan Exp $ -->
+
+<!-- 
+ Copyright (c) 2012, 2013, Oracle and/or its affiliates. All rights reserved.
+
+   NAME
+     bus_params_customer.xml - <one-line expansion of the name>
+
+   DESCRIPTION
+     <short description of component this file declares/defines>
+
+   NOTES
+     <other useful comments, qualifications, etc.>
+
+   MODIFIED   (MM/DD/YY)
+   ajena      01/12/12 - Creation
+
+-->
+<BusinessConfiguration
+        xmlns="http://www.portal.com/schemas/BusinessConfig"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.portal.com/schemas/BusinessConfig business_configuration.xsd">
+
+        <BusParamConfigurationClass>
+                <BusParamsCustomer>
+                         <SubscriberLifeCycle>disabled</SubscriberLifeCycle>
+                         <EnablePasswordRestriction>disabled</EnablePasswordRestriction>
+                </BusParamsCustomer>
+        </BusParamConfigurationClass>
+</BusinessConfiguration>
+

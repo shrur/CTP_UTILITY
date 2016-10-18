@@ -1,0 +1,392 @@
+#
+# @(#)% % 
+#############################################################################
+#
+# Copyright (c) 1996, 2014, Oracle and/or its affiliates. All rights reserved.
+#       
+#  This material is the confidential property of Oracle Corporation
+#  or its subsidiaries or licensors and may be used, reproduced, stored
+#  or transmitted only in accordance with a valid Oracle license or
+#  sublicense agreement.
+#	    
+#	     
+#############################################################################
+# 
+#
+# You use this file to define the resources (balance element
+# IDs) available for setting up balance impacts for a rate.
+# After defining the resources, run the 'load_pin_beid'
+# utility to load the resources into the Portal database 
+# and create the new config object, config/beid.
+#
+# Use the following syntax for defining the resources:
+#
+#   <beid> <event_type> <stage> <round_mode> <round> 
+#	<tol_min> <tol_max> <tol_pct> <beid_str_code> <symbol> <name> <validity_in_days>
+#   where:
+#	<beid> is the resource number (balance element ID)
+#	<event_type> is the event type
+#	<stage> is the processing stage : PIN_BEID_PROCESSING_STAGE_RATING ...
+#			(see pin_bill.h )
+#	<round_mode> is the rounding mode : PIN_BEID_ROUND_NEAREST or... 
+#			(see pin_bill.h )
+#	<round> is the rounding value (precision)
+#	<tol_min> is the error tolerance minimum for euro and EMU currencies
+#	<tol_max> is the error tolerance maximum for euro and EMU currencies
+#	<tol_pct> is the error tolerance percentage for euro and EMU currencies
+#	<beid_str_code> is the abbreviation for currency resources
+#	<symbol> is the symbol for the resource
+#	<name> is the resource name
+#	<validity_in_days> is the validity of the resource in days. This is optional and if nothing is specified , by default it is set to 366.
+#
+# Use these rules for assigning resource numbers:
+#
+#   * Do NOT assign a resource number of 0.
+#   * Resource numbers 1 - 1000 are reserved for currencies.
+#   * Resource numbers 1001 - 1,000,000 are reserved for
+#     Portal non-currency resources.
+#   * Resource numbers 1,000,001+ are available for
+#     you to create custom resources.	
+#
+# The "rounding value" defines the number of decimal places
+# to round the resource. A positive value rounds to
+# the right (e.g., a rounding value of "1" yields 0.1).
+# A negative rounding value rounds to the left.
+# 
+# The three "error tolerance" values define the acceptable
+# underpayment that might result from euro and EMU currency
+# conversions.
+# 
+# The "abbreviation" and "symbol" values are used in Portal
+# client tools and on customer invoices.
+# 
+# The "resource name" is displayed in the Pricing Tool
+# when you create rates for a product and can be displayed
+# in invoices.
+#
+# REGULAR EXPRESSION MATCHING
+# ***************************
+# UNIX regular expression can be used in rounding configurations. For example
+# /event/session/[.]* matches all session events.
+# You can use single asterisk(*) to denote a default value such as any event type.
+# Single asterisk(*) is not a valid regular expression but it denotes as any event type.
+#
+# However, in combination with other charecters, you must use valid regular 
+# expressions. For example, specifying /event/* is incorrect which means 
+# "find a pattern that has /event  and followed by zero or more slashes".
+#  Specifying /event/[.]* is correct.
+#
+# Special consideration should be taken to test the rule matching algorithm 
+# since wildcards will be supported.
+# Suppose the following rules have the regular expressions:
+# 1. "/event/[.]*"
+# 2. "/event/session"
+# 3. "/event/session/[.]*"
+# 4. "/event/session/call"
+# 5. "*"
+# And you are trying to match the following pattern:  "/event/session/call"
+# Rule 1 will be matched because it is a substring of "/event/session/call".  
+# You should specify "^/event/session$" if you don't want this rule to match the pattern.
+# Rule 4 is equivalent to Rule 3.
+# If you want the pattern to match Rule 4, then you should specify the rule as
+# "^/event/session/call$" for exact match, and it should be placed before Rule 3.
+# Finally, Rule 5 is the "catch all", so it will always be matched last.
+# 
+# So the correct sequence of the expression for matching "event/session/call"
+# 1. "/event/session/call"
+# 2. "/event/session"
+# 3. "/event/session/[.]*"
+# 4. "/event/[.]*"
+# 5. "*"
+#
+# CONSUMPTION RULE
+# ****************
+# The consumption rule(con_rule_id) column will have values between 0 and 12.
+# Value 0 is UNDEFINED consumption rule. This can be changed and all the rows
+# for each resource should have same consumption rule.
+#
+# APPLY MODE
+# ****************
+# The apply mode(apply_mode) column will have values 0 or 1.
+# Value 0 is UNDEFINED apply mode. This can be changed and all the rows
+# for each resource should have same apply mode. Value "1" 
+# signifies that FOLD will be applied on a resource(default)
+# and value "0" is undefined (no FOLD). 
+#
+# WARNING!
+# Do NOT change these resources once you have loaded them 
+# into a database, or the data will be corrupted.
+# 
+# NOTE:
+# To add resources, use the Policy Configuration Tool.
+#
+#================================================================
+version 2
+#
+#================================================================
+# Currency Resources
+#
+# Portal uses ISO 4217 currency code values for currencies. 
+# The pin_currency.h file has a list of some of the ISO 
+# standard currencies.
+#
+#<beid> <r_mode> <round> <tol_min> <tol_max> <tol_pct> <beid_str_code> <symbol> <event> 	<stage>	<con_rule_id>	<apply_mode>    <Name>
+#
+840	0	2	0.010000 0.050000 0.040000 	USD 	$     		*		0	0		1		US Dollar
+840	0	2	0.010000 0.050000 0.040000 	USD 	$     		*		1	0		1		US Dollar
+840	0	2	0.010000 0.050000 0.040000 	USD 	$     		*		2	0		1		US Dollar
+840	0	2	0.010000 0.050000 0.040000 	USD 	$     		*		3	0		1		US Dollar
+036	0	2	0.010000 0.050000 0.040000 	A$ 	$     		*		0	0		1		Australian Dollar
+036	0	2	0.010000 0.050000 0.040000 	A$ 	$     		*		1	0		1		Australian Dollar
+036	0	2	0.010000 0.050000 0.040000 	A$ 	$     		*		2	0		1		Australian Dollar
+036	0	2	0.010000 0.050000 0.040000 	A$ 	$     		*		3	0		1		Australian Dollar
+124	0	2	0.010000 0.050000 0.040000 	CAD	Can$		*               0   	0		1		Canadian Dollar
+124	0	2	0.010000 0.050000 0.040000 	CAD	Can$		*               1   	0		1		Canadian Dollar
+124	0	2	0.010000 0.050000 0.040000 	CAD	Can$		*               2   	0		1		Canadian Dollar
+124	0	2	0.010000 0.050000 0.040000 	CAD	Can$		*               3   	0		1		Canadian Dollar
+756	0	2	0.010000 0.050000 0.040000 	CHF	SFr.		*               0	0		1		Swiss Franc
+756	0	2	0.010000 0.050000 0.040000 	CHF	SFr.		*               1	0		1		Swiss Franc
+756	0	2	0.010000 0.050000 0.040000 	CHF	SFr.		*               2	0		1		Swiss Franc
+756	0	2	0.010000 0.050000 0.040000 	CHF	SFr.		*               3	0		1		Swiss Franc
+826	0	2	0.010000 0.050000 0.040000 	GBP	L     		*               0	0		1		British Pound Sterling
+826	0	2	0.010000 0.050000 0.040000 	GBP	L     		*               1	0		1		British Pound Sterling
+826	0	2	0.010000 0.050000 0.040000 	GBP	L     		*               2	0		1		British Pound Sterling
+826	0	2	0.010000 0.050000 0.040000 	GBP	L     		*               3	0		1		British Pound Sterling
+392	0	2	0.010000 0.050000 0.040000 	JPY	Yen   		*               0	0		1		Japanese Yen
+392	0	2	0.010000 0.050000 0.040000 	JPY	Yen   		*               1	0		1		Japanese Yen
+392	0	2	0.010000 0.050000 0.040000 	JPY	Yen   		*               2	0		1		Japanese Yen
+392	0	2	0.010000 0.050000 0.040000 	JPY	Yen   		*               3	0		1		Japanese Yen
+#
+# Euro and EMU currencies
+#
+978	0	3	0.010000 0.050000 0.040000 	EUR	E     		*               0	0		1		Euro
+978	0	3	0.010000 0.050000 0.040000 	EUR	E     		*               1	0		1		Euro
+978	0	3	0.010000 0.050000 0.040000 	EUR	E     		*               2	0		1		Euro
+978	0	3	0.010000 0.050000 0.040000 	EUR	E     		*               3	0		1		Euro
+250	0	3	0.010000 0.050000 0.040000 	FRF  	F     		*               0	0		1		French Franc
+250	0	3	0.010000 0.050000 0.040000 	FRF  	F     		*               1	0		1		French Franc
+250	0	3	0.010000 0.050000 0.040000 	FRF  	F     		*               2	0		1		French Franc
+250	0	3	0.010000 0.050000 0.040000 	FRF  	F     		*               3	0		1		French Franc
+280	0	3	0.010000 0.050000 0.040000 	DEM  	DM    		*               0	0		1		Deutsche Mark
+280	0	3	0.010000 0.050000 0.040000 	DEM  	DM    		*               1	0		1		Deutsche Mark
+280	0	3	0.010000 0.050000 0.040000 	DEM  	DM    		*               2	0		1		Deutsche Mark
+280	0	3	0.010000 0.050000 0.040000 	DEM  	DM    		*               3	0		1		Deutsche Mark
+380	0	3	0.010000 0.050000 0.040000 	ITL  	L.    		*               0	0		1		Italian Lira
+380	0	3	0.010000 0.050000 0.040000 	ITL  	L.    		*               1	0		1		Italian Lira
+380	0	3	0.010000 0.050000 0.040000 	ITL  	L.    		*               2	0		1		Italian Lira
+380	0	3	0.010000 0.050000 0.040000 	ITL  	L.    		*               3	0		1		Italian Lira
+528	0	3	0.010000 0.050000 0.040000 	NLG  	f.    		*               0	0		1		Netherlands Guilder
+528	0	3	0.010000 0.050000 0.040000 	NLG  	f.    		*               1	0		1		Netherlands Guilder
+528	0	3	0.010000 0.050000 0.040000 	NLG  	f.    		*               2	0		1		Netherlands Guilder
+528	0	3	0.010000 0.050000 0.040000 	NLG  	f.    		*               3	0		1		Netherlands Guilder
+56 	0	3	0.010000 0.050000 0.040000 	BEF  	BF    		*               0	0		1		Belgian Franc
+56 	0	3	0.010000 0.050000 0.040000 	BEF  	BF    		*               1	0		1		Belgian Franc
+56 	0	3	0.010000 0.050000 0.040000 	BEF  	BF    		*               2	0		1		Belgian Franc
+56 	0	3	0.010000 0.050000 0.040000 	BEF  	BF    		*               3	0		1		Belgian Franc
+724	0	3	0.010000 0.050000 0.040000 	ESP  	Pts   		*               0	0		1		Spanish Peseta
+724	0	3	0.010000 0.050000 0.040000 	ESP  	Pts   		*               1	0		1		Spanish Peseta
+724	0	3	0.010000 0.050000 0.040000 	ESP  	Pts   		*               2	0		1		Spanish Peseta
+724	0	3	0.010000 0.050000 0.040000 	ESP  	Pts   		*               3	0		1		Spanish Peseta
+246	0	3	0.010000 0.050000 0.040000 	FIM  	mk    		*               0	0		1		Finnish Markka
+246	0	3	0.010000 0.050000 0.040000 	FIM  	mk    		*               1	0		1		Finnish Markka
+246	0	3	0.010000 0.050000 0.040000 	FIM  	mk    		*               2	0		1		Finnish Markka
+246	0	3	0.010000 0.050000 0.040000 	FIM  	mk    		*               3	0		1		Finnish Markka
+372	0	3 	0.010000 0.050000 0.040000 	IEP  	IRL   		*               0	0		1		Irish Pound
+372	0	3 	0.010000 0.050000 0.040000 	IEP  	IRL   		*               1	0		1		Irish Pound
+372	0	3 	0.010000 0.050000 0.040000 	IEP  	IRL   		*               2	0		1		Irish Pound
+372	0	3 	0.010000 0.050000 0.040000 	IEP  	IRL   		*               3	0		1		Irish Pound
+40 	0	3	0.010000 0.050000 0.040000 	ATS  	oS    		*               0	0		1		Austrian Schilling
+40 	0	3	0.010000 0.050000 0.040000 	ATS  	oS    		*               1	0		1		Austrian Schilling
+40 	0	3	0.010000 0.050000 0.040000 	ATS  	oS    		*               2	0		1		Austrian Schilling
+40 	0	3	0.010000 0.050000 0.040000 	ATS  	oS    		*               3	0		1		Austrian Schilling
+442	0	3	0.010000 0.050000 0.040000 	LUF  	LuxF		*               0	0		1		Luxembourg Franc
+442	0	3	0.010000 0.050000 0.040000 	LUF  	LuxF		*               1	0		1		Luxembourg Franc
+442	0	3	0.010000 0.050000 0.040000 	LUF  	LuxF		*               2	0		1		Luxembourg Franc
+442	0	3	0.010000 0.050000 0.040000 	LUF  	LuxF		*               3	0		1		Luxembourg Franc
+620	0	3	0.010000 0.050000 0.040000 	PTE  	Esc.		*               0	0		1		Portugese Escudo
+620	0	3	0.010000 0.050000 0.040000 	PTE  	Esc.		*               1	0		1		Portugese Escudo
+620	0	3	0.010000 0.050000 0.040000 	PTE  	Esc.		*               2	0		1		Portugese Escudo
+620	0	3	0.010000 0.050000 0.040000 	PTE  	Esc.		*               3	0		1		Portugese Escudo
+300	0	3	0.010000 0.050000 0.040000	GRD	Dr		*               0	0		1		Greek Drachma
+300	0	3	0.010000 0.050000 0.040000	GRD	Dr		*               1	0		1		Greek Drachma
+300	0	3	0.010000 0.050000 0.040000	GRD	Dr		*               2	0		1		Greek Drachma
+300	0	3	0.010000 0.050000 0.040000	GRD	Dr		*               3	0		1		Greek Drachma
+#
+# TAP currency SDR
+#
+999     0       2       0.010000 0.050000 0.040000      SDR     SDR             *               0       0               1		Special Drawing Right
+999     0       2       0.010000 0.050000 0.040000      SDR     SDR             *               1       0               1		Special Drawing Right
+999     0       2       0.010000 0.050000 0.040000      SDR     SDR             *               2       0               1		Special Drawing Right
+999     0       2       0.010000 0.050000 0.040000      SDR     SDR             *               3       0               1		Special Drawing Right
+#
+#================================================================
+# Portal Non-Currency Resources
+#
+100001	0	2	0.000000 0.000000 0.000000	HRS  	NonCur		*               0	0		1		PO balance
+100001	0	2	0.000000 0.000000 0.000000	HRS  	NonCur		*               1	0		1		PO balance
+100001	0	2	0.000000 0.000000 0.000000	HRS  	NonCur		*               2	0		1		PO balance
+100001	0	2	0.000000 0.000000 0.000000	HRS  	NonCur		*               3	0		1		PO balance
+100002	0	5	0.000000 0.000000 0.000000	MIN	NonCur		*               0	0		1		MINUTES balance
+100002	0	5	0.000000 0.000000 0.000000	MIN	NonCur		*               1	0		1		MINUTES balance
+100002	0	5	0.000000 0.000000 0.000000	MIN	NonCur		*               2	0		1		MINUTES balance
+100002	0	5	0.000000 0.000000 0.000000	MIN	NonCur		*               3	0		1		MINUTES balance
+#
+#================================================================
+# Custom Non-Currency Resources
+#
+1000001	0	5	0.000000 0.000000 0.000000 	HRS  	Hrs 	 	*               0	0		1		async bulk hours
+1000001	0	5	0.000000 0.000000 0.000000 	HRS  	Hrs 	 	*               1	0		1		async bulk hours
+1000001	0	5	0.000000 0.000000 0.000000 	HRS  	Hrs 	 	*               2	0		1		async bulk hours
+1000001	0	5	0.000000 0.000000 0.000000 	HRS  	Hrs 	 	*               3	0		1		async bulk hours
+1000002	0	5	0.000000 0.000000 0.000000	HRS 	Hrs 		*               0   	0		1		isdn bulk hours
+1000002	0	5	0.000000 0.000000 0.000000	HRS 	Hrs 		*               1   	0		1		isdn bulk hours
+1000002	0	5	0.000000 0.000000 0.000000	HRS 	Hrs 		*               2   	0		1		isdn bulk hours
+1000002	0	5	0.000000 0.000000 0.000000	HRS 	Hrs 		*               3   	0		1		isdn bulk hours
+1000008 0	5	0.000000 0.000000 0.000000	MON	Mon		*               0   	0		1		paid month
+1000008 0	5	0.000000 0.000000 0.000000	MON	Mon		*               1   	0		1		paid month
+1000008 0	5	0.000000 0.000000 0.000000	MON	Mon		*               2   	0		1		paid month
+1000008 0	5	0.000000 0.000000 0.000000	MON	Mon		*               3   	0		1		paid month
+1000010 0	1	0.000000 0.000000 0.000000	MIN	Min		*               0   	0		1		Free Domestic Minutes
+1000010 0	1	0.000000 0.000000 0.000000	MIN	Min		*               1   	0		1		Free Domestic Minutes
+1000010 0	1	0.000000 0.000000 0.000000	MIN	Min		*               2   	0		1		Free Domestic Minutes
+1000010 0	1	0.000000 0.000000 0.000000	MIN	Min		*               3   	0		1		Free Domestic Minutes
+1000020 0	1	0.000000 0.000000 0.000000	MIN	Min		*               0   	0		1		Free Asia Minutes
+1000020 0	1	0.000000 0.000000 0.000000	MIN	Min		*               1   	0		1		Free Asia Minutes
+1000020 0	1	0.000000 0.000000 0.000000	MIN	Min		*               2   	0		1		Free Asia Minutes
+1000020 0	1	0.000000 0.000000 0.000000	MIN	Min		*               3   	0		1		Free Asia Minutes
+1000003 0	0	0.000000 0.000000 0.000000	MIL	Mil		*               0   	0		1		Frequent Flier Miles
+1000003 0	0	0.000000 0.000000 0.000000	MIL	Mil		*               1   	0		1		Frequent Flier Miles
+1000003 0	0	0.000000 0.000000 0.000000	MIL	Mil		*               2   	0		1		Frequent Flier Miles
+1000003 0	0	0.000000 0.000000 0.000000	MIL	Mil		*               3   	0		1		Frequent Flier Miles
+1000004 0	0	0.000000 0.000000 0.000000	GAM	Gam		*               0   	0		1		Free Game 
+1000004 0	0	0.000000 0.000000 0.000000	GAM	Gam		*               1   	0		1		Free Game 
+1000004 0	0	0.000000 0.000000 0.000000	GAM	Gam		*               2   	0		1		Free Game 
+1000004 0	0	0.000000 0.000000 0.000000	GAM	Gam		*               3   	0		1		Free Game 
+1000005 0	0	0.000000 0.000000 0.000000	AUD	Aud		*               0   	0		1		Minute Streamed Audio
+1000005 0	0	0.000000 0.000000 0.000000	AUD	Aud		*               1   	0		1		Minute Streamed Audio
+1000005 0	0	0.000000 0.000000 0.000000	AUD	Aud		*               2   	0		1		Minute Streamed Audio
+1000005 0	0	0.000000 0.000000 0.000000	AUD	Aud		*               3   	0		1		Minute Streamed Audio
+1000006 0	0	0.000000 0.000000 0.000000	VID	Vid		*               0   	0		1		Minute Streamed Video
+1000006 0	0	0.000000 0.000000 0.000000	VID	Vid		*               1   	0		1		Minute Streamed Video
+1000006 0	0	0.000000 0.000000 0.000000	VID	Vid		*               2   	0		1		Minute Streamed Video
+1000006 0	0	0.000000 0.000000 0.000000	VID	Vid		*               3   	0		1		Minute Streamed Video
+1000007 0	0	0.000000 0.000000 0.000000	ART	Art		*               0   	0		1		Articles Downloaded
+1000007 0	0	0.000000 0.000000 0.000000	ART	Art		*               1   	0		1		Articles Downloaded
+1000007 0	0	0.000000 0.000000 0.000000	ART	Art		*               2   	0		1		Articles Downloaded
+1000007 0	0	0.000000 0.000000 0.000000	ART	Art		*               3   	0		1		Articles Downloaded
+1000011 0	0	0.000000 0.000000 0.000000	WRN	Wrn		*               0   	0		1		Warning
+1000011 0	0	0.000000 0.000000 0.000000	WRN	Wrn		*               1   	0		1		Warning
+1000011 0	0	0.000000 0.000000 0.000000	WRN	Wrn		*               2   	0		1		Warning
+1000011 0	0	0.000000 0.000000 0.000000	WRN	Wrn		*               3   	0		1		Warning
+1000009 0	0	0.000000 0.000000 0.000000	MBU	Mbu		*               0   	0		1		MB Used
+1000009 0	0	0.000000 0.000000 0.000000	MBU	Mbu		*               1   	0		1		MB Used
+1000009 0	0	0.000000 0.000000 0.000000	MBU	Mbu		*               2   	0		1		MB Used
+1000009 0	0	0.000000 0.000000 0.000000	MBU	Mbu		*               3   	0		1		MB Used
+1000012	0	0	0.000000 0.000000 0.000000	PQ	PQ		*               0   	0		1		Paid Quarter
+1000012	0	0	0.000000 0.000000 0.000000	PQ	PQ		*               1   	0		1		Paid Quarter
+1000012	0	0	0.000000 0.000000 0.000000	PQ	PQ		*               2   	0		1		Paid Quarter
+1000012	0	0	0.000000 0.000000 0.000000	PQ	PQ		*               3   	0		1		Paid Quarter
+1000018 0	2	0.000000 0.000000 0.000000	ART	Art		*               0   	0		1		Artist Royalty
+1000018 0	2	0.000000 0.000000 0.000000	ART	Art		*               1   	0		1		Artist Royalty
+1000018 0	2	0.000000 0.000000 0.000000	ART	Art		*               2   	0		1		Artist Royalty
+1000018 0	2	0.000000 0.000000 0.000000	ART	Art		*               3   	0		1		Artist Royalty
+1000019 0	0	0.000000 0.000000 0.000000	SON	Son		*               0   	0		1		Songs Downloaded
+1000019 0	0	0.000000 0.000000 0.000000	SON	Son		*               1   	0		1		Songs Downloaded
+1000019 0	0	0.000000 0.000000 0.000000	SON	Son		*               2   	0		1		Songs Downloaded
+1000019 0	0	0.000000 0.000000 0.000000	SON	Son		*               3   	0		1		Songs Downloaded
+1000021 0	2	0.000000 0.000000 0.000000	PRO	Pro		*               0   	0		1		Producer Royalty
+1000021 0	2	0.000000 0.000000 0.000000	PRO	Pro		*               1   	0		1		Producer Royalty
+1000021 0	2	0.000000 0.000000 0.000000	PRO	Pro		*               2   	0		1		Producer Royalty
+1000021 0	2	0.000000 0.000000 0.000000	PRO	Pro		*               3   	0		1		Producer Royalty
+1000022 0	2	0.000000 0.000000 0.000000	PRE	Pre		*               0   	0		1		Pre-discount dollars
+1000022 0	2	0.000000 0.000000 0.000000	PRE	Pre		*               1   	0		1		Pre-discount dollars
+1000022 0	2	0.000000 0.000000 0.000000	PRE	Pre		*               2   	0		1		Pre-discount dollars
+1000022 0	2	0.000000 0.000000 0.000000	PRE	Pre		*               3   	0		1		Pre-discount dollars
+1000023 0	0	0.000000 0.000000 0.000000	ART	Art		*               0   	0		1		ERP Active
+1000023 0	0	0.000000 0.000000 0.000000	ART	Art		*               1   	0		1		ERP Active
+1000023 0	0	0.000000 0.000000 0.000000	ART	Art		*               2   	0		1		ERP Active
+1000023 0	0	0.000000 0.000000 0.000000	ART	Art		*               3   	0		1		ERP Active
+1000024 0	0	0.000000 0.000000 0.000000	CAS	Cas		*               0   	0		1		ERP Causal
+1000024 0	0	0.000000 0.000000 0.000000	CAS	Cas		*               1   	0		1		ERP Causal
+1000024 0	0	0.000000 0.000000 0.000000	CAS	Cas		*               2   	0		1		ERP Causal
+1000024 0	0	0.000000 0.000000 0.000000	CAS	Cas		*               3   	0		1		ERP Causal
+1000025 0	0	0.000000 0.000000 0.000000	SEL	Sel		*               0   	0		1		ERP SelfService
+1000025 0	0	0.000000 0.000000 0.000000	SEL	Sel		*               1   	0		1		ERP SelfService
+1000025 0	0	0.000000 0.000000 0.000000	SEL	Sel		*               2   	0		1		ERP SelfService
+1000025 0	0	0.000000 0.000000 0.000000	SEL	Sel		*               3   	0		1		ERP SelfService
+1000026 0	0	0.000000 0.000000 0.000000	MIN	Min		*               0   	0		1		Customer Service Minute
+1000026 0	0	0.000000 0.000000 0.000000	MIN	Min		*               1   	0		1		Customer Service Minute
+1000026 0	0	0.000000 0.000000 0.000000	MIN	Min		*               2   	0		1		Customer Service Minute
+1000026 0	0	0.000000 0.000000 0.000000	MIN	Min		*               3   	0		1		Customer Service Minute
+1000027 0	2	0.000000 0.000000 0.000000	PCM	Pcm		*               0   	0		1		Direct Parent Commission
+1000027 0	2	0.000000 0.000000 0.000000	PCM	Pcm		*               1   	0		1		Direct Parent Commission
+1000027 0	2	0.000000 0.000000 0.000000	PCM	Pcm		*               2   	0		1		Direct Parent Commission
+1000027 0	2	0.000000 0.000000 0.000000	PCM	Pcm		*               3   	0		1		Direct Parent Commission
+1000028 0	0	0.000000 0.000000 0.000000	DCO	Dco		*               0   	0		1		Direct Parent Counter
+1000028 0	0	0.000000 0.000000 0.000000	DCO	Dco		*               1   	0		1		Direct Parent Counter
+1000028 0	0	0.000000 0.000000 0.000000	DCO	Dco		*               2   	0		1		Direct Parent Counter
+1000028 0	0	0.000000 0.000000 0.000000	DCO	Dco		*               3   	0		1		Direct Parent Counter
+1000029 0	0	0.000000 0.000000 0.000000	HCM	Hcm		*               0   	0		1		Hierarchy Commission
+1000029 0	0	0.000000 0.000000 0.000000	HCM	Hcm		*               1   	0		1		Hierarchy Commission
+1000029 0	0	0.000000 0.000000 0.000000	HCM	Hcm		*               2   	0		1		Hierarchy Commission
+1000029 0	0	0.000000 0.000000 0.000000	HCM	Hcm		*               3   	0		1		Hierarchy Commission
+1000030 0	0	0.000000 0.000000 0.000000	HCO	Hco		*               0   	0		1		Hierarchy Counter
+1000030 0	0	0.000000 0.000000 0.000000	HCO	Hco		*               1   	0		1		Hierarchy Counter
+1000030 0	0	0.000000 0.000000 0.000000	HCO	Hco		*               2   	0		1		Hierarchy Counter
+1000030 0	0	0.000000 0.000000 0.000000	HCO	Hco		*               3   	0		1		Hierarchy Counter
+1000031 0	0	0.000000 0.000000 0.000000	MBT	Mbt		*               0   	0		1		MB Transferred
+1000031 0	0	0.000000 0.000000 0.000000	MBT	Mbt		*               1   	0		1		MB Transferred
+1000031 0	0	0.000000 0.000000 0.000000	MBT	Mbt		*               2   	0		1		MB Transferred
+1000031 0	0	0.000000 0.000000 0.000000	MBT	Mbt		*               3   	0		1		MB Transferred
+1000090 0	0	0.000000 0.000000 0.000000	KBU	Kbu		*               0  	0		1		KB Used
+1000090 0	0	0.000000 0.000000 0.000000	KBU	Kbu		*               1   	0		1		KB Used
+1000090 0	0	0.000000 0.000000 0.000000	KBU	Kbu		*               2   	0		1		KB Used
+1000090 0	0	0.000000 0.000000 0.000000	KBU	Kbu		*               3   	0		1		KB Used
+1000091 0	0	0.000000 0.000000 0.000000	PTS	pts     	*               0   	0		1		Loyalty Points
+1000091 0	0	0.000000 0.000000 0.000000	PTS	pts     	*               1   	0		1		Loyalty Points
+1000091 0	0	0.000000 0.000000 0.000000	PTS	pts     	*               2   	0		1		Loyalty Points
+1000091 0	0	0.000000 0.000000 0.000000	PTS	pts     	*               3   	0		1		Loyalty Points
+1000092 0	0	0.000000 0.000000 0.000000	TKS     tks     	*               0   	0		1		Tokens
+1000092 0	0	0.000000 0.000000 0.000000	TKS     tks     	*               1   	0		1		Tokens
+1000092 0	0	0.000000 0.000000 0.000000	TKS     tks     	*               2   	0		1		Tokens
+1000092 0	0	0.000000 0.000000 0.000000	TKS     tks     	*               3   	0		1		Tokens
+1000093 0	0	0.000000 0.000000 0.000000	BSC     bsc     	*               0   	0		1		Basic Content Accessed 
+1000093 0	0	0.000000 0.000000 0.000000	BSC     bsc     	*               1   	0		1		Basic Content Accessed 
+1000093 0	0	0.000000 0.000000 0.000000	BSC     bsc     	*               2   	0		1		Basic Content Accessed 
+1000093 0	0	0.000000 0.000000 0.000000	BSC     bsc     	*               3   	0		1		Basic Content Accessed 
+1000094 0	0	0.000000 0.000000 0.000000	PRC     prc    		*               0   	0		1		Premium Content Accessed 
+1000094 0	0	0.000000 0.000000 0.000000	PRC     prc    		*               1   	0		1		Premium Content Accessed 
+1000094 0	0	0.000000 0.000000 0.000000	PRC     prc    		*               2   	0		1		Premium Content Accessed 
+1000094 0	0	0.000000 0.000000 0.000000	PRC     prc    		*               3   	0		1		Premium Content Accessed 
+1000095 0	1	0.000000 0.000000 0.000000	YES MIN			*               0   	0		1		Free Seconds
+1000095 0	1	0.000000 0.000000 0.000000	YES MIN			*               1   	0		1		Free Seconds
+1000095 0	1	0.000000 0.000000 0.000000	YES MIN			*               2   	0		1		Free Seconds
+1000095 0	1	0.000000 0.000000 0.000000	YES MIN			*               3   	0		1		Free Seconds
+1000096 0       2       0.000000 0.000000 0.000000      SAV sav                 *               0   	0		1		Saving Resource Id
+1000096 0       2       0.000000 0.000000 0.000000      SAV sav                 *               1   	0		1		Saving Resource Id
+1000096 0       2       0.000000 0.000000 0.000000      SAV sav                 *               2   	0		1		Saving Resource Id
+1000096 0       2       0.000000 0.000000 0.000000      SAV sav                 *               3   	0		1		Saving Resource Id
+1000097 0       1       0.000000 0.000000 0.000000      MFUC    MFUc   		*  		0  	0		1		Monthly Fee & Usage Counter
+1000097 0       1       0.000000 0.000000 0.000000      MFUC    MFUc   		*  		1  	0		1		Monthly Fee & Usage Counter
+1000097 0       1       0.000000 0.000000 0.000000      MFUC    MFUc   		*  		2  	0		1		Monthly Fee & Usage Counter
+1000097 0       1       0.000000 0.000000 0.000000      MFUC    MFUc   		*  		3  	0		1		Monthly Fee & Usage Counter
+1000098 0       1       0.000000 0.000000 0.000000      CMFUC   CMFUc  		*  		0  	0		1		Copy of MFUC
+1000098 0       1       0.000000 0.000000 0.000000      CMFUC   CMFUc  		*  		1  	0		1		Copy of MFUC
+1000098 0       1       0.000000 0.000000 0.000000      CMFUC   CMFUc  		*  		2  	0		1		Copy of MFUC
+1000098 0       1       0.000000 0.000000 0.000000      CMFUC   CMFUc  		*  		3  	0		1		Copy of MFUC
+1000099 0       1       0.000000 0.000000 0.000000      CDC     CDc    		*  		0  	0		1		Contract Day Counter
+1000099 0       1       0.000000 0.000000 0.000000      CDC     CDc    		*  		1  	0		1		Contract Day Counter
+1000099 0       1       0.000000 0.000000 0.000000      CDC     CDc    		*  		2  	0		1		Contract Day Counter
+1000099 0       1       0.000000 0.000000 0.000000      CDC     CDc    		*  		3  	0		1		Contract Day Counter
+1000100 0       1       0.000000 0.000000 0.000000      CDCD    CDCd   		*               0  	0		1		CDC for Discount
+1000100 0       1       0.000000 0.000000 0.000000      CDCD    CDCd   		*		1  	0		1		CDC for Discount
+1000100 0       1       0.000000 0.000000 0.000000      CDCD    CDCd   		*  		2  	0		1		CDC for Discount
+1000100 0       1       0.000000 0.000000 0.000000      CDCD    CDCd   		*  		3  	0		1		CDC for Discount
+1000101 0       1       0.000000 0.000000 0.000000      LC      Lc     		*  		0  	0		1		Line Counter
+1000101 0       1       0.000000 0.000000 0.000000      LC      Lc     		*  		1  	0		1		Line Counter
+1000101 0       1       0.000000 0.000000 0.000000      LC      Lc     		*  		2  	0		1		Line Counter
+1000101 0       1       0.000000 0.000000 0.000000      LC      Lc     		*  		3  	0		1		Line Counter
+1000102 0       1       0.000000 0.000000 0.000000      CHAGC   CHAGc  		*  		0  	0		1		Child Aggregation Counter
+1000102 0       1       0.000000 0.000000 0.000000      CHAGC   CHAGc  		*  		1  	0		1		Child Aggregation Counter
+1000102 0       1       0.000000 0.000000 0.000000      CHAGC   CHAGc  		*  		2  	0		1		Child Aggregation Counter
+1000102 0       1       0.000000 0.000000 0.000000      CHAGC   CHAGc  		*  		3  	0		1		Child Aggregation Counter

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+
+<!--  $Header: bus_platform_vob/financial/config/load/config_note_status.xml /cgbubrm_7.5.0.portalbase/1 2015/11/27 05:07:06 nishahan Exp $ -->
+
+<!-- 
+ Copyright (c) 2013, 2014, Oracle and/or its affiliates. All rights reserved.
+
+   NAME
+     config_note_status.xml - Input XML file to create /config/note_status object.
+
+   DESCRIPTION
+	Input XML file to create /config/note_status object.
+
+   NOTES
+     <other useful comments, qualifications, etc.>
+
+   MODIFIED   (MM/DD/YY)
+   akadambi    12/27/13 - Creation
+
+-->
+
+<ObjectList
+  xmlns="http://www.oracle.com/schemas/BusinessConfig"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.oracle.com/schemas/BusinessConfig ../../../xsd/config_note_status.xsd">
+
+   <ConfigObject>
+	
+	<DESCR>Permissible statuses for NOTES</DESCR>
+	<NAME>NOTE STATUS</NAME>
+	
+	<STATUSES elem="0">
+		<STATUS>100</STATUS>
+		<STRING_ID>100</STRING_ID>
+		<STR_VERSION>1</STR_VERSION>
+		<NAME>Not Set</NAME>
+	</STATUSES>
+	<STATUSES elem="1">
+		<STATUS>101</STATUS>
+		<STRING_ID>101</STRING_ID>
+		<STR_VERSION>1</STR_VERSION>
+		<NAME>Resolved</NAME>
+	</STATUSES>
+	<STATUSES elem="2">
+		<STATUS>102</STATUS>
+		<STRING_ID>102</STRING_ID>
+		<STR_VERSION>1</STR_VERSION>
+		<NAME>Unresolved</NAME>
+	</STATUSES>
+
+   </ConfigObject>
+
+</ObjectList>

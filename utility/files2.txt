@@ -1,0 +1,2 @@
+#files which u want migrate                 #username          #password
+/opt/app/brm/7.5/sys/msgs/reasoncodes/reasons.en_US,/opt/app/brm/7.5/sys/msgs/eradescr/era_descr.en_US	pin	10.75.253.102	 

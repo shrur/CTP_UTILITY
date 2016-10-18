@@ -1,0 +1,906 @@
+#
+# "@(#)%Portal Version: pin_glid: %";
+#
+#======================================================================
+# General Ledger (G/L) ID Definitions
+#======================================================================
+#
+#      Copyright (c) 1999 - 2006 Oracle. All rights reserved.
+#
+#      This material is the confidential property of Oracle Corporation or its
+#      licensors and may be used, reproduced, stored or transmitted only in
+#      accordance with a valid Oracle license or sublicense agreement.
+#
+#======================================================================
+# Use this file to define G/L IDs that correspond to your accounting
+# methods. 
+#
+# After defining the G/L IDs, run the 'load_pin_glid' utility to
+# create the new config/glid storable object and load the G/L IDs
+# into the Infranet database.
+#
+# You can have multiple pin_glid files, each defining the G/L IDs
+# for some segments of your customer base. Use the "gl_segment"
+# entry in this file to specify the segments for which these G/L IDs
+# apply.
+#
+# For more information, see "About Collecting General Ledger
+# Information" in the Infranet online documentation.
+#======================================================================
+
+
+#======================================================================
+# gl_segment
+#
+# Name of the G/L segment described by this configuration file.
+# You can define multiple GL segments in this file. All the gl segments
+# that are defined shall have the same glids. You have to specify at least 
+# one gl_segment in this file
+#
+# Note that you may have different glid files and each glid file may have 
+# multiple segments. You need to ensure that the gl segment names specified in
+# different glid files do not conflict. If this happens, the system shall
+# overwrite the gl segment with the data of the last loaded glid file 
+# 
+# The value you specify should match the value in the PIN_FLD_GL_SEGMENT 
+# in the account objects for which you will use this set of G/L IDs.
+# 
+# GLIDs are assigned to accounts through the cm pin.conf parameter gl_segment
+# and can be overridden by the policy opcode pcm_op_pol_cust_actginfo
+#======================================================================
+# Syntax for G/L Segment Definitions
+#
+# Use this syntax to define a gl_segment:
+#
+#   gl_segment	<segment_name>	[no_rollup] 
+#
+#
+# segment_name
+#
+# You specify the segment name. The segment name follows a URL-like notation 
+# and allows you to nest G/L segments. There is a root segment in Infranet
+# and it is named ".".  If your system has additional child segments then
+# you define them as <root segment>.<child_segment>. You can have unlimited
+# level of nesting. Segment names are case sensitive and cannot have spaces
+# .
+#
+# The segment name . is used to identify the root segment. It is reserved and
+# you should not change it 
+#
+# no_rollup
+#
+# The no_rollup is used to indicate whether you want the data for the gl 
+# segment to rollup to its parent. If you do not want the data of this 
+# gl_segment to rollup to its parent then you must specify no_rollup. If you 
+# want the rollup then you must leave it blank. Note that the root segment (.) 
+# does not rollup even if you specify blank. This is a special case. 
+# 
+# An example is shown below :
+# 
+# gl_segment	.		  
+# gl_segment	.A		 (Child segment A, rolls up to . )
+# gl_segment	.A.A1		 (Child segment of A, rolls up to A and to .)
+# gl_segment	.A.A2  no_rollup (Child segment of A, does not roll up to A )
+# gl_segment	.B     no_rollup (Child segment of . but does not rollup)	
+# gl_segment	.C		 (Child segment of . rolls up to . )	
+#
+# Based on the above example, if you prepare the ledger report for
+#
+# .		The data from .A, .A.A1 and .C is included 
+# .A		The data of .A and .A.A1 is included (.A.A2 is not included)
+# .A.A1		The data of .A.A1 is included (no childs of .A.A1 exist)
+# .A.A2   	The data of .A.A2 is included (no childs of .A.A2 exist) 
+# .B   		The data of .B is included (no childs of .B exist) 
+# .C   		The data of .C is included (no childs of .C exist) 
+#
+# The default file has only the root segment specified in it
+#======================================================================
+gl_segment	.	
+
+#======================================================================
+# COA_Id 
+#
+# Name of the Chart of Accounts (COA) Id that shall be used to validate the gl 
+# accounts specified under a GL Id 
+#
+# This is an optional parameter. If you want the glids to be validated
+# against a COA_Id then you must specify this parameter. If you do not want
+# validation against a COA then leave it blank or do not specify the parameter. 
+# If specify this parameter and do not specify any value then it is as good as 
+# not specifying the parameter. 
+#
+# If a COA_Id value is provided then the program checks if it has already been
+# created. Refer to the Infranet documentation on how to create COA's. 
+# Hence  you must load the COA before loading the pin_glid files
+#
+# The default is no COA_Id
+# 
+# Note that you can specify only one COA_Id in one pin_glid file. The same
+# COA_Id can be used in multiple pin_glid files if required.
+#=======================================================================
+COA_Id
+
+#======================================================================
+# Syntax for G/L ID Definitions
+#
+# Use this syntax to define a G/L ID:
+#
+#   glid (
+# 	id		<uint>
+# 	descr		<str>
+#	taxcode		<str>
+#	gl_acct		[type] [attribute] [debit acct] [credit acct]
+#   )
+#
+# The following sections describe each of these fields.
+#======================================================================
+# id
+#
+# An identification number you assign to a G/L ID.
+#
+# This ID can then be referenced by rates.
+#
+# GLID values has to be assigned according to following rules:
+# 1. GLID from 0 to 1000000 - are reserved for Portal use.
+#    Use values greater than 1000000 when defining your own G/L IDs.  
+#    The data type must be "uint".
+# 2. GLID 0 - is journalized, but it is excluded from GL reports.
+#    This value is considered as undefined and 
+#    should not be present in production system.
+# 3. GLID from 1 to 99 - are excluded from journalizing and GL reports.
+# 4. GLID from 100 - are journalized and included in GL reports.
+#
+# The combined length of the "id" field and the "descr" field must  
+# be less than 255 characters.
+#======================================================================
+# descr 
+#
+# A short description of the G/L ID.  
+#
+# This description is displayed on the Pricing Tool pull-down menus.
+#
+# The combined length of the "id" field and the "descr" field must  
+# be less than 255 characters. 
+#======================================================================
+# taxcode
+# 
+# Type of product being purchased. 
+#
+# This value must match the tax code used for the rates that use 
+# this G/L ID. 
+#======================================================================
+# gl_acct
+#
+# An array that describes a pair of G/L accounts. Each G/L ID can have 
+# multiple gl_acct arrays.  Each array contains the following fields:
+# 
+#    ----------------------------------------------------------------
+#    type - The conditions related to the billing and accounting 
+#           cycles under which this pair of G/L accounts should be 
+#           used.  There are seven valid types:
+#
+#           1. billed             5. unbilled_earned  
+#           2. unbilled           6. unbilled_unearned   
+#           3. billed_earned      7. prev_billed_earned  
+#           4. billed_unearned
+#
+#           For more information, see "About G/L account pair types"  
+#           in the Infranet online documentation. 
+#    -----------------------------------------------------------------
+#    attribute - The conditions related to what the amount of the 
+#                balance impact represents under which this
+#                pair of G/L accounts should be used.  There are four
+#                valid values:
+#                
+#                1. gross          3. net
+#                2. disc           4. tax 
+#
+#                For more information, see "About G/L account
+#                attributes" in the Infranet online documentation. 
+#    -----------------------------------------------------------------
+#    debit acct - The name of one of the Infranet G/L accounts that
+#               will be affected by this G/L ID.  For example, an A/R
+#               account will appear here for G/L IDs that refer to 
+#               fees charged to the end user.  The impact on this 
+#               account is the opposite of the impact on the 
+#               credit acct.  
+#    -----------------------------------------------------------------
+#    credit acct - The name of one of the Infranet G/L accounts that 
+#                  will be affected by this G/L ID.  For example, an
+#                  revenue account will appear here for G/L IDs that 
+#                  refer to fees charged to the end user. The impact on
+#                  this account is the opposite of the impact
+#                  on the debit acct. 
+#======================================================================
+
+#======================================================================
+#
+#  Validation between the gl account and chart of account type.
+#
+#
+#  For a debit general ledger account
+#
+#  gl attribute    |    Chart Of Account Type
+#  ________________|_________________________
+#                  |
+#  Gross           |    Asset
+#  Net             |    Asset
+#  Tax             |    Asset
+#  Disc            |    Expense or Revenue
+#
+#
+#  For a credit general ledger account
+#
+#  gl attribute    |    Chart Of Account Type
+#  ________________|_________________________
+#                  |
+#  Gross           |    Expense or Revenue
+#  Net             |    Expense or Revenue
+#  Tax             |    Liability
+#  Disc            |    Asset
+#
+#
+#======================================================================
+
+#======================================================================
+# Default G/L ID 	
+#======================================================================
+glid (
+	id		0
+	descr		undefined
+	gl_acct		unbilled	net 	undef.debit 	undef.credit
+	gl_acct		billed		net 	undef.debit 	undef.credit
+)
+
+#======================================================================
+# G/L ID for purchase rate 
+#======================================================================
+glid (
+	id		101
+	descr		Purchase Fees
+	gl_acct	billed			gross	purchase.debit	purchase.credit
+	gl_acct	billed			net	purchase.debit	purchase.credit
+	gl_acct	billed			disc	purchase.credit	purchase.debit
+	gl_acct	billed_earned		gross	purchase.debit	purchase.credit
+	gl_acct	billed_earned		net	purchase.debit	purchase.credit
+	gl_acct	billed_earned		disc	purchase.credit	purchase.debit
+	gl_acct	unbilled 		gross 	purchase.debit	purchase.credit
+	gl_acct	unbilled 		net 	purchase.debit	purchase.credit
+	gl_acct	unbilled 		disc 	purchase.credit	purchase.debit 
+	gl_acct	unbilled_earned		gross	purchase.debit	purchase.credit
+	gl_acct	unbilled_earned		net	purchase.debit	purchase.credit
+	gl_acct	unbilled_earned		disc	purchase.credit	purchase.debit
+)
+
+#======================================================================
+# G/L ID for cycle_forward rate 
+#======================================================================
+glid (
+	id		102
+	descr		Monthly Fees
+	gl_acct	billed			gross	monthly.debit	monthly.credit
+	gl_acct	billed			net	monthly.debit	monthly.credit
+	gl_acct	billed			disc	monthly.credit	monthly.debit
+	gl_acct	billed_earned		gross	monthly.debit	monthly.credit
+	gl_acct	billed_earned		net	monthly.debit	monthly.credit
+	gl_acct	billed_earned		disc	monthly.credit	monthly.debit
+	gl_acct	prev_billed_earned	gross	monthly.debit	monthly.credit
+	gl_acct	prev_billed_earned	net	monthly.debit	monthly.credit
+	gl_acct	prev_billed_earned	disc	monthly.credit	monthly.debit
+	gl_acct	billed_unearned		gross	monthly.debit	monthly.credit
+	gl_acct	billed_unearned		net	monthly.debit	monthly.credit
+	gl_acct	billed_unearned		disc	monthly.credit	monthly.debit
+	gl_acct	unbilled 		gross 	monthly.debit	monthly.credit
+	gl_acct	unbilled 		net 	monthly.debit	monthly.credit
+	gl_acct	unbilled 		disc 	monthly.credit	monthly.debit 
+	gl_acct	unbilled_earned		gross	monthly.debit	monthly.credit
+	gl_acct	unbilled_earned		net	monthly.debit	monthly.credit
+	gl_acct	unbilled_earned		disc	monthly.credit	monthly.debit
+	gl_acct	unbilled_unearned	gross	monthly.debit	monthly.credit
+	gl_acct	unbilled_unearned	net	monthly.debit	monthly.credit
+	gl_acct	unbilled_unearned	disc	monthly.credit	monthly.debit
+)
+
+#======================================================================
+# G/L ID for cancel rate 
+#======================================================================
+glid (
+	id		103
+	descr		Cancel Fees
+	gl_acct	billed			gross	cancel.debit	cancel.credit
+	gl_acct	billed			net	cancel.debit	cancel.credit
+	gl_acct	billed			disc	cancel.credit	cancel.debit
+	gl_acct	billed_earned		gross	cancel.debit	cancel.credit
+	gl_acct	billed_earned		net	cancel.debit	cancel.credit
+	gl_acct	billed_earned		disc	cancel.credit	cancel.debit
+	gl_acct	unbilled 		gross 	cancel.debit	cancel.credit
+	gl_acct	unbilled 		net 	cancel.debit	cancel.credit
+	gl_acct	unbilled 		disc 	cancel.credit	cancel.debit 
+	gl_acct	unbilled_earned		gross	cancel.debit	cancel.credit
+	gl_acct	unbilled_earned		net	cancel.debit	cancel.credit
+	gl_acct	unbilled_earned		disc	cancel.credit	cancel.debit
+)
+
+#======================================================================
+# G/L ID for usage rate 
+#======================================================================
+glid (
+	id		104
+	descr		Dialup Usage Fee
+	gl_acct	billed			gross	dialup.debit	dialup.credit
+	gl_acct	billed			net	dialup.debit	dialup.credit
+	gl_acct	billed			disc	dialup.credit	dialup.debit
+	gl_acct	billed_earned		gross	dialup.debit	dialup.credit
+	gl_acct	billed_earned		net	dialup.debit	dialup.credit
+	gl_acct	billed_earned		disc	dialup.credit	dialup.debit
+	gl_acct	unbilled 		gross 	dialup.debit	dialup.credit
+	gl_acct	unbilled 		net 	dialup.debit	dialup.credit
+	gl_acct	unbilled 		disc 	dialup.credit	dialup.debit 
+	gl_acct	unbilled_earned		gross	dialup.debit	dialup.credit
+	gl_acct	unbilled_earned		net	dialup.debit	dialup.credit
+	gl_acct	unbilled_earned		disc	dialup.credit	dialup.debit
+)
+
+#======================================================================
+# G/L ID for misc adjustments
+#======================================================================
+glid (
+	id		105
+	descr		Misc Adjustments
+	gl_acct	billed			gross	misc.credit	misc.debit
+	gl_acct	billed			net	misc.credit	misc.debit
+	gl_acct	billed_earned		gross	misc.credit	misc.debit
+	gl_acct	billed_earned		net	misc.credit	misc.debit
+)
+
+#======================================================================
+# G/L ID for writeoff adjustments 
+#======================================================================
+glid (
+	id		106
+	descr		Writeoff Adjustments
+	gl_acct	billed			gross	writeoff.credit	writeoff.debit
+	gl_acct	billed			net	writeoff.credit	writeoff.debit
+	gl_acct	billed_earned		gross	writeoff.credit	writeoff.debit
+	gl_acct	billed_earned		net	writeoff.credit	writeoff.debit
+)
+
+#======================================================================
+# G/L ID for dispute adjustments
+#======================================================================
+glid (
+	id		107
+	descr		Dispute Adjustments
+	gl_acct	billed			gross	dispute.credit	dispute.debit
+	gl_acct	billed			net	dispute.credit	dispute.debit
+	gl_acct	billed_earned		gross	dispute.credit	dispute.debit
+	gl_acct	billed_earned		net	dispute.credit	dispute.debit
+)
+
+#======================================================================
+# G/L ID for dispute settlements
+#======================================================================
+glid (
+	id		108
+	descr		Dispute Settlements
+	gl_acct	billed		gross	settlement.credit	settlement.debit
+	gl_acct	billed		net	settlement.credit	settlement.debit
+	gl_acct	billed_earned	gross	settlement.credit	settlement.debit
+	gl_acct	billed_earned	net	settlement.credit	settlement.debit
+)
+
+#======================================================================
+# G/L ID for payments 
+#======================================================================
+glid (
+	id		109
+	descr		Payment received
+	gl_acct	billed			gross	cash.credit	cash.debit
+	gl_acct	billed			net	cash.credit	cash.debit
+	gl_acct	billed_earned		gross	cash.credit	cash.debit
+	gl_acct	billed_earned		net	cash.credit	cash.debit
+)
+
+#======================================================================
+# G/L ID for writeoff adjustments for auto-writeoff feature 
+#======================================================================
+glid (
+	id		110
+	descr		Re-writeoff while WOR 
+	gl_acct	billed			gross	writeoff.credit	writeoff.debit
+	gl_acct	billed			net	writeoff.credit	writeoff.debit
+	gl_acct	billed_earned		gross	writeoff.credit	writeoff.debit
+	gl_acct	billed_earned		net	writeoff.credit	writeoff.debit
+)
+
+
+#======================================================================
+# G/L ID for write-off reversal adjustment  
+#======================================================================
+glid (
+	id		111
+	descr		Write-off reversal
+	gl_acct	billed			gross	writeoff-reversal.credit	writeoff-reversal.debit
+	gl_acct	billed			net	writeoff-reversal.credit	writeoff-reversal.debit
+	gl_acct	billed_earned		gross	writeoff-reversal.credit	writeoff-reversal.debit
+	gl_acct	billed_earned		net	writeoff-reversal.credit	writeoff-reversal.debit
+)
+
+#======================================================================
+# G/L IDs for purchase tax
+#======================================================================
+glid (
+	id		1001
+	taxcode		PURCHASE_TAXCODE
+	descr		Tax on purchase fee
+	gl_acct	billed			tax	sales.tax.debit	sales.tax.credit
+	gl_acct	billed_earned		tax	sales.tax.debit	sales.tax.credit
+	gl_acct	unbilled 		tax 	sales.tax.debit	sales.tax.credit 
+	gl_acct	unbilled_earned		tax	sales.tax.debit	sales.tax.credit
+)
+
+#======================================================================
+# G/L IDs for cycle_forward tax
+#======================================================================
+glid (
+	id		1002
+	taxcode		CYCLE_FORWARD_TAXCODE
+	descr		Tax on cycle forward fee
+	gl_acct	billed			tax	cycle.tax.debit	cycle.tax.credit
+	gl_acct	billed_earned		tax	cycle.tax.debit	cycle.tax.credit
+	gl_acct	prev_billed_earned	tax	cycle.tax.debit	cycle.tax.credit
+	gl_acct	billed_unearned		tax	cycle.tax.debit	cycle.tax.credit
+	gl_acct	unbilled 		tax 	cycle.tax.debit	cycle.tax.credit
+	gl_acct	unbilled_earned		tax	cycle.tax.debit	cycle.tax.credit
+	gl_acct	unbilled_unearned	tax	cycle.tax.debit	cycle.tax.credit
+)
+
+#======================================================================
+# G/L IDs for cancel tax
+#======================================================================
+glid (
+	id		1003
+	taxcode		CANCEL_TAXCODE
+	descr		Tax on cancellation fee
+	gl_acct	billed			tax	cancel.tax.debit	cancel.tax.credit
+	gl_acct	billed_earned		tax	cancel.tax.debit	cancel.tax.credit
+	gl_acct	unbilled 		tax 	cancel.tax.debit	cancel.tax.credit 
+	gl_acct	unbilled_earned		tax	cancel.tax.debit	cancel.tax.credit
+
+)
+
+#======================================================================
+# G/L IDs for ip/dialup/async/hourly tax
+#======================================================================
+glid (
+	id		1004
+	taxcode		USAGE_TAXCODE
+	descr		ip/dialup/async/hourly Tax
+	gl_acct	billed			tax	usage.tax.debit	usage.tax.credit
+	gl_acct	billed_earned		tax	usage.tax.debit	usage.tax.credit
+	gl_acct	unbilled 		tax 	usage.tax.debit	usage.tax.credit 
+	gl_acct	unbilled_earned		tax	usage.tax.debit	usage.tax.credit
+)
+
+#======================================================================
+# New entries for GSM sample price plan. Same values as Integrate
+#======================================================================
+#======================================================================
+# G/L ID for National Airtime Telephony
+#======================================================================
+glid (
+	id		1420
+	descr		National Airtime Telephony
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for International Airtime Telephony
+#======================================================================
+glid (
+	id		1421
+	descr		Intl. Airtime Tel.
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for National Airtime SMS
+#======================================================================
+glid (
+	id		1430
+	descr		National Airtime SMS
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for International Airtime SMS
+#======================================================================
+glid (
+	id		1431
+	descr		International Airtime SMS
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for National Airtime other GSM
+#======================================================================
+glid (
+	id		1440
+	descr		National Airtime other GSM
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for International Airtime other GSM
+#======================================================================
+glid (
+	id		1441
+	descr		Intl. Airtime other GSM
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+
+#======================================================================
+# G/L ID for National Usage GPRS
+#======================================================================
+glid (
+	id		1450
+	descr		National Usage GPRS
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for International Usage GPRS
+#======================================================================
+glid (
+	id		1451
+	descr		International Usage GPRS
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for Euro Incomming Roaming GSM
+#======================================================================
+glid (
+	id		1500
+	descr		Euro Incomming Roaming GSM
+	taxcode		REDUC
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for Euro Outgoing Roaming GSM
+#======================================================================
+glid (
+	id		1501
+	descr		Euro Outgoing Roaming GSM
+	taxcode		REDUC
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for Int. Incomming Roaming GSM
+#======================================================================
+glid (
+	id		1503
+	descr		Int. Incomming Roaming GSM
+	taxcode		ZERO
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for Int. Outgoing Roaming GSM
+#======================================================================
+glid (
+	id		1504
+	descr		Int. Outgoing Roaming GSM
+	taxcode		ZERO
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for National Usage other Services
+#======================================================================
+glid (
+	id		1460
+	descr		Nat. Usage other Services
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for International Usage other Services
+#======================================================================
+glid (
+	id		1461
+	descr		Intl. Usage other Services
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for National VAS
+#======================================================================
+glid (
+	id		1510
+	descr		National VAS
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for International VAS
+#======================================================================
+glid (
+	id		1511
+	descr		International VAS
+	taxcode		REDUC
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for GSM Sample Usage
+#======================================================================
+glid (
+	id		1600
+	descr		GSM Sample Usage
+	taxcode		NORM
+	gl_acct	billed			gross	wireless.debit	wireless.credit
+	gl_acct	billed			net	wireless.debit	wireless.credit
+	gl_acct	billed			disc	wireless.credit	wireless.debit
+	gl_acct	billed_earned		gross	wireless.debit	wireless.credit
+	gl_acct	billed_earned		net	wireless.debit	wireless.credit
+	gl_acct	billed_earned		disc	wireless.credit	wireless.debit
+	gl_acct	unbilled 		gross 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		net 	wireless.debit	wireless.credit
+	gl_acct	unbilled 		disc 	wireless.credit	wireless.debit 
+	gl_acct	unbilled_earned		gross	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		net	wireless.debit	wireless.credit
+	gl_acct	unbilled_earned		disc	wireless.credit	wireless.debit
+)
+
+#======================================================================
+# G/L ID for Epsilon Journal
+#======================================================================
+glid (
+	id		1512
+	descr		GL for Rounding Errors
+	gl_acct	billed			gross	rounding.debit	rounding.credit
+	gl_acct	billed			net	rounding.debit	rounding.credit
+	gl_acct	billed_earned		gross	rounding.debit	rounding.credit
+	gl_acct	billed_earned		net	rounding.debit	rounding.credit
+)
+
+#======================================================================
+# G/L ID for incollect of network operator
+#======================================================================
+glid (
+        id              1513
+        descr           Roaming Incollect 
+        gl_acct billed                  gross   wireless.debit  wireless.credit
+        gl_acct billed                  net     wireless.debit  wireless.credit
+        gl_acct billed                  disc    wireless.credit wireless.debit
+        gl_acct billed_earned           gross   wireless.debit  wireless.credit
+        gl_acct billed_earned           net     wireless.debit  wireless.credit
+        gl_acct billed_earned           disc    wireless.credit wireless.debit
+        gl_acct unbilled                gross   wireless.debit  wireless.credit
+        gl_acct unbilled                net     wireless.debit  wireless.credit
+        gl_acct unbilled                disc    wireless.credit wireless.debit
+        gl_acct unbilled_earned         gross   wireless.debit  wireless.credit
+        gl_acct unbilled_earned         net     wireless.debit  wireless.credit
+        gl_acct unbilled_earned         disc    wireless.credit wireless.debit
+)
+
+#======================================================================
+# G/L ID for Outcollect of network operator
+#======================================================================
+glid (
+        id              1514
+        descr           Roaming Outcollect
+        gl_acct billed                  gross   wireless.debit  wireless.credit
+        gl_acct billed                  net     wireless.debit  wireless.credit
+        gl_acct billed                  disc    wireless.credit wireless.debit
+        gl_acct billed_earned           gross   wireless.debit  wireless.credit
+        gl_acct billed_earned           net     wireless.debit  wireless.credit
+        gl_acct billed_earned           disc    wireless.credit wireless.debit
+        gl_acct unbilled                gross   wireless.debit  wireless.credit
+        gl_acct unbilled                net     wireless.debit  wireless.credit
+        gl_acct unbilled                disc    wireless.credit wireless.debit
+        gl_acct unbilled_earned         gross   wireless.debit  wireless.credit
+        gl_acct unbilled_earned         net     wireless.debit  wireless.credit
+        gl_acct unbilled_earned         disc    wireless.credit wireless.debit
+)
+
+
+#======================================================================
+# Your custom G/L IDs below.  Start the G/L ID at 1000000.  You may use
+# the G/L IDs defined above or delete the above and create your own. 
+# However, if you create your own misc G/L, payment, adjustment, 
+# dispute/settlement and writeoff G/L ID, you must also tell Infranet 
+# to assign these events with your newly defined G/L IDs by using the 
+# reasons codes file or modifying fm_act_pol_spec_glid.c. 
+#======================================================================

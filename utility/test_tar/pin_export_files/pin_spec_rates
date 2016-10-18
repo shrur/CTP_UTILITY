@@ -1,0 +1,43 @@
+#
+# @(#)%Portal Version: pin_spec_rates:ServerIDCVelocityInt:7:2005-Mar-28 05:41:37 %
+#
+#      Copyright (c) 1997 - 2006 Oracle. All rights reserved.
+#
+#      This material is the confidential property of Oracle Corporation
+#      or its subsidiaries or licensors and may be used, reproduced, stored
+#      or transmitted only in accordance with a valid Oracle license or
+#      sublicense agreement.
+#
+# 
+#	This Portal configuration file 'pin_spec_rates' is being used
+# by the rating engine to map the opcode(s) to event type to be rated. 
+# This config file will be loaded to create a new config object 
+# (/config/spec_rates) by an app called load_pin_spec_rates, which parses 
+# this config file and creates an Portal config object.
+#
+# The format of this file is,
+#	OPCODE		OPFLAG		EVENT_TYPE
+#	-------------------------------------------
+#	302		0		/event/customer
+# 
+# The OPCODE field indicates the policy opcode that specify the rating 
+# information for the event specified in EVENT_TYPE. For example, the 
+# policy opcode PCM_OP_ACT_POL_SPEC_RATES will be used to rate the events 
+# of the type '/event/customer'.
+# Note a event subtype will match the opcode specified for its parent type. 
+# However, the rating engine will find the entry that best match the 
+# incoming event type.
+#
+version 1
+#
+# The following entries of the format
+#	opcode	opflag	event-type
+#	302	0	/event/customer
+#
+# This causes PCM_OP_ACT_POL_SPEC_RATES opcode to be called when a
+# event of '/event/customer' type or its subtype happens. Vendors can 
+# specify special flags to be passed while calling the opcode using the 
+# OPFLAG field.
+#
+302	0	/event/customer
+302	0	/event/session/ipt

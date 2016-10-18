@@ -1,0 +1,202 @@
+#
+# @(#)pin_impact_category 1.1 98/06/23
+#
+#############################################################################
+#
+#  Copyright (c) 1998 - 2006 Oracle. All rights reserved.
+#
+#  This material is the confidential property of Oracle Corporation
+#  or its subsidiaries or licensors and may be used, reproduced, stored
+#  or transmitted only in accordance with a valid Oracle license or
+#  sublicense agreement.
+#
+#############################################################################
+# 
+# You use this Portal configuration file, 'pin_impact_category', 
+# to name impact categories. You use impact categories to create
+# groups of events that you want to treat similarly during
+# rating. The most common example is when defining calling
+# zones. You can map several origin/destination pairs of
+# of calling numbers to a single impact category.  When you
+# create a pricing plan, you associate each impact category 
+# with a certain rate.
+# 
+# The syntax for naming impact categories in this file is:
+# 
+#	SERVICE_TYPE	RATE_CATEGORY		IMPACT_CATEGORY
+# 
+# After defining impact categories, run 'load_pin_impact_category'
+# to load the impact categories into the Portal database and 
+# create the new config object, /config/impact_category. When you
+# run 'load_pin_impact_category', make sure you have in the same
+# directory a pin.conf file that specifies the location of the
+# Portal database.
+#
+#================================================================
+version 1
+#================================================================
+#
+# Impact categories for /service/telephony
+#
+# Note:
+# Only the 'default' category is required. The other categories
+# shown in this file are provided for use with the sample pricing
+# model included with Portal IPT.
+#
+#	SERVICE_TYPE	RATE_CATEGORY			IMPACT_CATEGORY
+
+/service/telephony	purchase			default
+/service/telephony	cycle_forward			default
+/service/telephony	ip/telephony/minute		default
+/service/telephony	ip/telephony/minute		*
+/service/telephony      ip/telephony/minute             US_to_US
+/service/telephony      ip/telephony/minute             US/Southern_to_US/Central
+/service/telephony      ip/telephony/minute             SpecialServices_$0.75_Category
+/service/telephony      ip/telephony/minute             SpecialServices_$1.50_Category
+/service/telephony      ip/telephony/minute             US_to_Asia
+/service/telephony      ip/telephony/minute             Asia_to_US
+/service/telephony      ip/telephony/minute             Philippines_to_US/Western
+/service/telephony      ip/telephony/minute             US_to_Europe
+/service/telephony      ip/telephony/minute             Europe_to_US
+/service/wap/interactive activity			Premium
+/service/wap/interactive activity			Standard
+/service/wap/interactive activity			Discount
+/service/wap/interactive activity			Free
+/service/wap/interactive activity			Error
+/service/wap/interactive activity			default
+/service/content	 activity		  	M_Commerce
+/service/content	 activity			Weather
+/service/content	 activity			News
+/service/content	 activity		 	Premium_Content
+/service/content	 activity		 	Standard_Content
+/service/content	 activity		 	Games
+/service/content	 activity		 	Movies
+/service/content	 activity		 	Traffic
+/service/content	 activity		 	Sports
+/service/content	 activity		 	Stocks
+/service/content	 activity		 	Horoscopes
+/service/content	 activity		 	Lottery
+/service/content	 activity		 	Jokes
+/service/content	 activity		 	Fun_Facts
+/service/content	 activity		 	Messaging
+/service/content	 activity		 	Fodor's_Hotel
+/service/content	 activity		 	Zagat's_Restaurants
+/service/content	 activity		 	Directory
+/service/content	 activity		 	RingTones
+/service/content	 activity		 	Icons
+/service/content	 activity		 	Alerts
+/service/content	 activity		 	Instant_Messaging
+/service/content	 activity		 	default
+/service/content	 activity		 	Games_$1.95_category
+/service/content	 activity		 	Games_$.05_category
+/service/content	 activity		 	Games_$.50_category
+/service/content	 activity		 	Games_$.95_category
+/service/content	 activity		 	Reward_Games
+/service/content	 activity		 	Music
+/service/content	 activity		 	Teen_Events
+/service/content	 activity		 	Local_Teen_Events
+/service/content	 activity		 	ChatRooms
+/service/content	 activity		 	PhotoSharing
+/service/telco/st_cellular/data purchase                        default
+/service/telco/st_cellular/data cycle_forward                   default
+/service/telco/st_cellular/data activity                        *
+/service/telco/st_cellular/data activity                        Data_Sask_Tariff_1
+/service/telco/st_cellular/data activity                        Data_Sask_Tariff_2
+/service/telco/st_cellular/data activity                        Data_Sask_Tariff_3
+/service/telco/st_cellular/data activity                        Data_Sask_Tariff_4
+/service/telco/st_cellular/data activity                        Data_Sask_Tariff_5
+/service/telco/st_cellular/data activity                        Data_Sask_Tariff_6
+/service/telco/st_cellular/data activity                        Data_Sask_Tariff_7
+/service/telco/st_cellular/data activity                        Data_Sask_Tariff_8
+/service/telco/st_cellular/data activity                        Data_Can_Tariff_1
+/service/telco/st_cellular/data activity                        Data_Can_Tariff_2
+/service/telco/st_cellular/data activity                        Data_Can_Tariff_3
+/service/telco/st_cellular/data activity                        Data_Can_Tariff_4
+/service/telco/st_cellular/data activity                        Data_Can_Tariff_5
+/service/telco/st_cellular/data activity                        Data_Can_Tariff_6
+/service/telco/st_cellular/data activity                        Data_Can_Tariff_7
+/service/telco/st_cellular/data activity                        Data_Can_Tariff_8
+/service/telco/st_cellular/data activity                        Data_USA_Tariff_1
+/service/telco/st_cellular/data activity                        Data_USA_Tariff_2
+/service/telco/st_cellular/data activity                        Data_USA_Tariff_3
+/service/telco/st_cellular/data activity                        Data_USA_Tariff_4
+/service/telco/st_cellular/data activity                        Data_USA_Tariff_5
+/service/telco/st_cellular/data activity                        Data_USA_Tariff_6
+/service/telco/st_cellular/data activity                        Data_USA_Tariff_7
+/service/telco/st_cellular/data activity                        Data_USA_Tariff_8
+/service/telco/st_cellular/data activity                        Data_Intl_Zone_1
+/service/telco/st_cellular/data activity                        Data_Intl_Zone_2
+/service/telco/st_cellular/data activity                        Data_Intl_Zone_3
+/service/telco/st_cellular/data activity                        Data_Intl_Zone_4
+/service/telco/st_cellular/data activity                        Data_Intl_Zone_5
+#MO====
+/service/telco/st_cellular/sms  purchase        default
+/service/telco/st_cellular/sms  cycle_forward   default
+/service/telco/st_cellular/sms  activity        *
+/service/telco/st_cellular/sms  activity        MO_SMS_Tariff_0
+/service/telco/st_cellular/sms  activity        MO_SMS_Tariff_15
+/service/telco/st_cellular/sms  activity        MO_SMS_Tariff_25
+/service/telco/st_cellular/sms  activity        MO_SMS_Tariff_50
+/service/telco/st_cellular/sms  activity        MO_SMS_Tariff_100
+/service/telco/st_cellular/sms  activity        MO_SMS_Tariff_200
+/service/telco/st_cellular/sms  activity        MO_SMS_Tariff_500
+/service/telco/st_cellular/sms  activity        MO_SMS_Default
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_0
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_15
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_25
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_50
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_100
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_125
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_150
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_200
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_250
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_300
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_400
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_500
+/service/telco/st_cellular/sms  activity        MT_SMS_Tariff_1000
+/service/telco/st_cellular/sms  activity        MT_SMS_Default
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_Tariff_0
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_Tariff_15
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_Tariff_25
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_Tariff_50
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_Tariff_100
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_Tariff_200
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_Tariff_500
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_CA
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_US
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_INT
+/service/telco/st_cellular/sms  activity        MO_SMS_CA_Default
+/service/telco/st_cellular/sms  activity        MO_SMS_US_Tariff_0
+/service/telco/st_cellular/sms  activity        MO_SMS_US_Tariff_15
+/service/telco/st_cellular/sms  activity        MO_SMS_US_Tariff_25
+/service/telco/st_cellular/sms  activity        MO_SMS_US_Tariff_50
+/service/telco/st_cellular/sms  activity        MO_SMS_US_Tariff_100
+/service/telco/st_cellular/sms  activity        MO_SMS_US_Tariff_200
+/service/telco/st_cellular/sms  activity        MO_SMS_US_Tariff_500
+/service/telco/st_cellular/sms  activity        MO_SMS_US_CA
+/service/telco/st_cellular/sms  activity        MO_SMS_US_US
+/service/telco/st_cellular/sms  activity        MO_SMS_US_INT
+/service/telco/st_cellular/sms  activity        MO_SMS_US_Default
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_Tariff_0
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_Tariff_15
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_Tariff_25
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_Tariff_50
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_Tariff_100
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_Tariff_200
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_Tariff_500
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_CA
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_US
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_INT
+/service/telco/st_cellular/sms  activity        MO_SMS_IN_Default
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_Tariff_0
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_Tariff_15
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_Tariff_25
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_Tariff_50
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_Tariff_100
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_Tariff_200
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_Tariff_500
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_CA
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_US
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_INT
+/service/telco/st_cellular/sms  activity        MO_SMS_CDMA_Default
+

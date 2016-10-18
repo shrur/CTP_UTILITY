@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--  $Header: bus_platform_vob/financial/config/load/config_note_type.xml /cgbubrm_7.5.0.portalbase/3 2015/12/15 00:49:22 sagaur Exp $ -->
+
+<!-- 
+ Copyright (c) 2013, 2015, Oracle and/or its affiliates. All rights reserved.
+
+   NAME
+     config_note_type.xml - Input XML file to create /config/note_type object. 
+
+   DESCRIPTION
+	Input XML file to create /config/note_type object.	
+
+   NOTES
+     <other useful comments, qualifications, etc.>
+
+   MODIFIED   (MM/DD/YY)
+   akadambi    12/27/13 - Creation
+   sagaur      04/09/15 - Modification
+   sagaur      10/07/15 - Modification
+   sagaur      12/07/15 - Modification
+   sagaur      12/14/15 - XbranchMerge sagaur_bug-22326614 from
+                          cgbubrm_7.5.0.ip2cloud.portalbase
+
+-->
+<ObjectList
+  xmlns="http://www.oracle.com/schemas/BusinessConfig"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.oracle.com/schemas/BusinessConfig ../../../xsd/config_note_type.xsd">
+
+    <ConfigObject>
+
+	<DESCR>Permissible types and sub-types for NOTES</DESCR>
+	<NAME>NOTE TYPE</NAME>
+
+	<TYPES elem="0">
+		<NOTE_TYPE>100</NOTE_TYPE>
+		<STRING_ID>100</STRING_ID>
+		<STR_VERSION>1</STR_VERSION>
+		<NAME>Inquiry</NAME>
+		<SUB_TYPES elem ="0">
+			<NOTE_SUB_TYPE>101</NOTE_SUB_TYPE>
+			<STRING_ID>101</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Balance Enquiry</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="1">
+			<NOTE_SUB_TYPE>102</NOTE_SUB_TYPE>
+			<STRING_ID>102</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Payment Enquiry</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="2">
+			<NOTE_SUB_TYPE>103</NOTE_SUB_TYPE>
+			<STRING_ID>103</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Service Enquiry</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="3">
+			<NOTE_SUB_TYPE>104</NOTE_SUB_TYPE>
+			<STRING_ID>104</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Other Enquiry</NAME>
+		</SUB_TYPES>
+	</TYPES>
+	<TYPES elem="1">
+		<NOTE_TYPE>200</NOTE_TYPE>
+		<STRING_ID>200</STRING_ID>
+		<STR_VERSION>1</STR_VERSION>
+		<NAME>A/R activity</NAME>
+		<SUB_TYPES elem ="0">
+			<NOTE_SUB_TYPE>201</NOTE_SUB_TYPE>
+			<STRING_ID>201</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Account adjustment</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="1">
+			<NOTE_SUB_TYPE>202</NOTE_SUB_TYPE>
+			<STRING_ID>202</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Bill adjustment</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="2">
+			<NOTE_SUB_TYPE>203</NOTE_SUB_TYPE>
+			<STRING_ID>203</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Item adjustment</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="3">
+			<NOTE_SUB_TYPE>204</NOTE_SUB_TYPE>
+			<STRING_ID>204</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Event adjustment</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="4">
+			<NOTE_SUB_TYPE>205</NOTE_SUB_TYPE>
+			<STRING_ID>205</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Account write-off</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="5">
+			<NOTE_SUB_TYPE>206</NOTE_SUB_TYPE>
+			<STRING_ID>206</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Bill write-off</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="6">
+			<NOTE_SUB_TYPE>207</NOTE_SUB_TYPE>
+			<STRING_ID>207</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Bill now</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="7">
+			<NOTE_SUB_TYPE>208</NOTE_SUB_TYPE>
+			<STRING_ID>208</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Dispute open</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="8">
+			<NOTE_SUB_TYPE>209</NOTE_SUB_TYPE>
+			<STRING_ID>209</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Dispute settled</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="9">
+			<NOTE_SUB_TYPE>210</NOTE_SUB_TYPE>
+			<STRING_ID>210</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Credit card charged</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="10">
+			<NOTE_SUB_TYPE>211</NOTE_SUB_TYPE>
+			<STRING_ID>211</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Non-Currency Adjustment</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="11">
+			<NOTE_SUB_TYPE>212</NOTE_SUB_TYPE>
+			<STRING_ID>212</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Bill refund</NAME>
+		</SUB_TYPES>
+	</TYPES>
+	<TYPES elem="2">
+		<NOTE_TYPE>300</NOTE_TYPE>
+		<STRING_ID>300</STRING_ID>
+		<STR_VERSION>1</STR_VERSION>
+		<NAME>Technical Problems</NAME>
+		<SUB_TYPES elem ="0">
+			<NOTE_SUB_TYPE>301</NOTE_SUB_TYPE>
+			<STRING_ID>301</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Service down</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="1">
+			<NOTE_SUB_TYPE>302</NOTE_SUB_TYPE>
+			<STRING_ID>302</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Installation incomplete</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="2">
+			<NOTE_SUB_TYPE>303</NOTE_SUB_TYPE>
+			<STRING_ID>303</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Unknown error</NAME>
+		</SUB_TYPES>
+	</TYPES>
+	<TYPES elem="3">
+		<NOTE_TYPE>400</NOTE_TYPE>
+		<STRING_ID>400</STRING_ID>
+		<STR_VERSION>1</STR_VERSION>
+		<NAME>CSR to CSR alert</NAME>
+		<SUB_TYPES elem ="0">
+			<NOTE_SUB_TYPE>401</NOTE_SUB_TYPE>
+			<STRING_ID>401</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Customer duress</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="1">
+			<NOTE_SUB_TYPE>402</NOTE_SUB_TYPE>
+			<STRING_ID>402</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Customer hard of hearing</NAME>
+		</SUB_TYPES>
+		<SUB_TYPES elem ="2">
+			<NOTE_SUB_TYPE>403</NOTE_SUB_TYPE>
+			<STRING_ID>403</STRING_ID>
+			<STR_VERSION>1</STR_VERSION>
+			<NAME>Difficult customer</NAME>
+		</SUB_TYPES>
+	</TYPES>
+	<TYPES elem="4">
+                <NOTE_TYPE>500</NOTE_TYPE>
+                <STRING_ID>500</STRING_ID>
+                <STR_VERSION>1</STR_VERSION>
+                <NAME>Notifications</NAME>
+                <SUB_TYPES elem ="0">
+                        <NOTE_SUB_TYPE>501</NOTE_SUB_TYPE>
+                        <STRING_ID>501</STRING_ID>
+                        <STR_VERSION>1</STR_VERSION>
+                        <NAME>Email</NAME>
+                </SUB_TYPES>
+                <SUB_TYPES elem ="1">
+                        <NOTE_SUB_TYPE>502</NOTE_SUB_TYPE>
+                        <STRING_ID>502</STRING_ID>
+                        <STR_VERSION>1</STR_VERSION>
+                        <NAME>API</NAME>
+                </SUB_TYPES>
+	</TYPES>
+	<TYPES elem="5">
+                <NOTE_TYPE>600</NOTE_TYPE>
+                <STRING_ID>600</STRING_ID>
+                <STR_VERSION>1</STR_VERSION>
+                <NAME>Financial Setup</NAME>
+                <SUB_TYPES elem ="0">
+                        <NOTE_SUB_TYPE>601</NOTE_SUB_TYPE>
+                        <STRING_ID>601</STRING_ID>
+                        <STR_VERSION>1</STR_VERSION>
+                        <NAME>Tax Setup</NAME>
+                </SUB_TYPES>
+	</TYPES>
+	<TYPES elem="6">
+                <NOTE_TYPE>700</NOTE_TYPE>
+                <STRING_ID>700</STRING_ID>
+                <STR_VERSION>1</STR_VERSION>
+                <NAME>Subscription</NAME>
+                <SUB_TYPES elem ="0">
+                        <NOTE_SUB_TYPE>701</NOTE_SUB_TYPE>
+                        <STRING_ID>701</STRING_ID>
+                        <STR_VERSION>1</STR_VERSION>
+                        <NAME>Account Creation</NAME>
+                </SUB_TYPES>
+	</TYPES>
+	<TYPES elem="7">
+                <NOTE_TYPE>800</NOTE_TYPE>
+                <STRING_ID>800</STRING_ID>
+                <STR_VERSION>1</STR_VERSION>
+                <NAME>Payment Suspense</NAME>
+                <SUB_TYPES elem ="0">
+                        <NOTE_SUB_TYPE>801</NOTE_SUB_TYPE>
+                        <STRING_ID>801</STRING_ID>
+                        <STR_VERSION>1</STR_VERSION>
+                        <NAME>Payment Reversal</NAME>
+                </SUB_TYPES>
+                <SUB_TYPES elem ="1">
+                        <NOTE_SUB_TYPE>802</NOTE_SUB_TYPE>
+                        <STRING_ID>802</STRING_ID>
+                        <STR_VERSION>1</STR_VERSION>
+                        <NAME>Suspense Details</NAME>
+                </SUB_TYPES>
+	</TYPES>
+    </ConfigObject>
+</ObjectList>

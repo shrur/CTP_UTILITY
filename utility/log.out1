@@ -1,0 +1,8 @@
+pin_export export utility started....
+cp: cannot stat `pin:10.75.253.102': No such file or directory
+User     : pin
+Hostname: 10.75.253.102
+tar: pin_export_files1: Cannot stat: No such file or directory
+tar: Exiting with failure status due to previous errors
+Started the transferring files from PROD to FTP server
+transferring Started

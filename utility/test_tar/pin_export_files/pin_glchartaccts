@@ -1,0 +1,132 @@
+#
+# @(#)pin_glchartaccts 1.0 00/04/07
+#
+#======================================================================
+# General Ledger Chart Of Accounts (G/L COA) Definitions
+#======================================================================
+#
+#      Copyright (c) 2000 - 2006 Oracle. All rights reserved.
+#
+#      This material is the confidential property of Oracle Corporation or its
+#      licensors and may be used, reproduced, stored or transmitted only in
+#      accordance with a valid Oracle license or sublicense agreement.
+#
+
+
+#======================================================================
+# Use this file to define G/L COAs that correspond to your accounting
+# methods. 
+#
+# After defining the G/L COA's, run the 'load_pin_glchartaccts' utility to
+# create the new config/glid storable object and load the G/L IDs
+# into the Infranet database.
+#
+# You can have multiple pin_glchartaccts files, each defining the G/L COAs
+#
+# For more information, see "About Collecting General Ledger
+# Information" in the Infranet online documentation.
+#======================================================================
+
+#======================================================================
+# Syntax for G/L COA Definitions
+#
+# Use this sytnax to define a G/L COA:
+#
+#   gl_chartaccts (
+# 	coa_id		<int>
+# 	coa_name	<str>
+#	gl_coa_accts	[acct_code] [descr] [type] [status] 
+#   )
+#
+# The following sections describe each of these fields.
+#======================================================================
+# coa_id
+#
+# An identification number you assign to a G/L COA.
+#
+# The data type must be "uint".
+# 
+#      Note :- Multiple coa_id's could be specified in the same file.
+#              Duplicate coa_id's are removed before loading. 
+#              
+#======================================================================
+# coa_name 
+#
+# A short name of the G/L COA.  
+#
+#======================================================================
+# gl_coa_acct
+#
+# An array that describes all the G/L accounts available for the GL
+# Chart Of Accounts
+# 
+#    ----------------------------------------------------------------
+#    acct_code - The account code or number used in the financial
+#		 system, also used in validating the accounts defined
+#		 in the gl_accts section of glid definitions in the
+#		 pin_glid file. 
+#
+#    -----------------------------------------------------------------
+#    descr - 	 The account description. 
+#
+#    -----------------------------------------------------------------
+#    type -	 Indicates what type of account - Asset (A),
+#		 Liability (L), Owner's Equity (O), Revenue (R),
+#		 Expenses (E)
+#    -----------------------------------------------------------------
+#    status - 	 The status of the account, active - 1, inactive - 0 
+#
+#    Note :- Within a gl_chartaccts the combination of acct_code and type
+#            should be unique. In case of duplicates an error in flagged.
+#
+#======================================================================
+
+#======================================================================
+#
+#  Validation between the gl account and chart of account type.
+#
+#
+#  For a debit general ledger account
+#
+#  gl attribute    |    Chart Of Account Type
+#  ________________|_________________________
+#                  |
+#  Gross           |    Asset
+#  Net             |    Asset
+#  Tax             |    Asset
+#  Disc            |    Expense or Revenue
+#
+#
+#  For a credit general ledger account
+#
+#  gl attribute    |    Chart Of Account Type
+#  ________________|_________________________
+#                  |
+#  Gross           |    Expense or Revenue
+#  Net             |    Expense or Revenue
+#  Tax             |    Liability
+#  Disc            |    Asset
+#
+#
+#======================================================================
+
+#======================================================================
+# Default G/L COA 	
+#======================================================================
+gl_chartaccts (
+	coa_id		1000
+	coa_name	Primary COA
+	gl_coa_acct	0	undefined	revenue 	active
+	gl_coa_acct	1	undefined	asset 		active
+	gl_coa_acct	49400	prepaid.off 	revenue 	active
+	gl_coa_acct	49300	monthly.A/R 	asset	 	active
+	gl_coa_acct	49200	uncollect.A/R 	asset 		active
+	gl_coa_acct	40800	uncollect.off 	revenue 	active
+	gl_coa_acct	40700	cancel.A/R 	asset 		active
+	gl_coa_acct	40500	prepaid.A/R 	asset 		active
+	gl_coa_acct	40000	purchase.off 	revenue 	active
+	gl_coa_acct	20160	monthly.off 	expense 	active
+	gl_coa_acct	20150	cancel.off 	expense 	active
+	gl_coa_acct	11000	purchase.A/R 	asset 		active
+	gl_coa_acct	10600	daily.A/R 	asset 		active
+)
