@@ -2,11 +2,14 @@
 exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>import_log.out 2>&1
+now=$(date +"%Y.%m.%d.%S")
+if [ ! -f /tmp/pin_export_files.tar.gz ]; then
+        echo "pin_export_files.tar.gz , file not found ">>"$PIN_HOME"/sys/test/Error_import.$now.log
+fi
 echo "pin_import import utility started...."
 cp /tmp/pin_export_files.tar.gz "$PIN_HOME"/sys/test
 cd "$PIN_HOME"/sys/test
 tar -xvzf pin_export_files.tar.gz
-now=$(date +"%Y.%m.%d.%S")
 sed -n '2,$ p' "$PIN_HOME"/sys/test/pin_export_files/pin_export.conf | while read -r LINE
 do
  #FILE=$(cat "$LINE")
@@ -86,13 +89,13 @@ do
 	esac
         if [ $? -eq 0 ]
         then
-          echo "$FILE , Success ">>"$PIN_HOME"/sys/test/utility/Success_import.$now.log
+          echo "$FILE , Success ">>"$PIN_HOME"/sys/test/Success_import.$now.log
         fi
  else
         echo "File $FILE Does Not Exist"
         if [ $? -eq 0 ]
         then
-          echo "$FILE , File not Found ">>"$PIN_HOME"/sys/test/utility/Error_import.$now.log
+          echo "$FILE , File not Found ">>"$PIN_HOME"/sys/test/Error_import.$now.log
         fi
  fi
 done
